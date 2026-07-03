@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://fo2omkvahded"]
+
+[ext_resource type="Texture2D" uid="uid://cd4j83gn2e1so" path="res://Assets/Art/Characters/Players/ShmupShip.png" id="1_hgvjy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_us00r"]
+size = Vector2(5, 5)
+
+[node name="ShmupShip" type="Area2D" unique_id=7930168]
+collision_layer = 2
+
+[node name="ShipSprite" type="Sprite2D" parent="." unique_id=2089499856]
+texture = ExtResource("1_hgvjy")
+centered = false
+offset = Vector2(-8, -16)
+
+[node name="PlayerHitBox" type="CollisionShape2D" parent="." unique_id=1325077902]
+position = Vector2(-0.5, -5.5)
+shape = SubResource("RectangleShape2D_us00r")
+debug_color = Color(0, 0.6487278, 0.1862356, 0.41960785)
