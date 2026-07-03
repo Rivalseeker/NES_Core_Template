@@ -81,7 +81,12 @@ public partial class MainMenu : Control
     private void OnMainGamePressed()
     {
         // We no longer disable buttons since the menu just hides instead.
-        if (!string.IsNullOrEmpty(_mainGamePath)) SceneManager.Instance.LoadSceneAsync(_mainGamePath);
+        if (!string.IsNullOrEmpty(_mainGamePath))
+        {
+            Visible = false;
+            SceneManager.Instance.LoadSceneAsync(_mainGamePath);
+        }
+        
     }
 
     private void OnOptionsPressed()

@@ -17,6 +17,7 @@ public partial class TitleScreen : Control
             
             if (!string.IsNullOrEmpty(_mainMenuPath))
             {
+                Visible = false;
                 SceneManager.Instance.LoadSceneAsync(_mainMenuPath);
             }
         }
