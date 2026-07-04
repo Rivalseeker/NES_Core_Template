@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://fo2omkvahded"]
 
 [ext_resource type="Texture2D" uid="uid://cd4j83gn2e1so" path="res://Assets/Art/Characters/Players/ShmupShip.png" id="1_hgvjy"]
+[ext_resource type="Script" uid="uid://d0f1qo6xtt5yw" path="res://Scripts/Characters/Players/ShmupShip.cs" id="1_rxg5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_us00r"]
 size = Vector2(5, 5)
 
 [node name="ShmupShip" type="Area2D" unique_id=7930168]
 collision_layer = 2
+script = ExtResource("1_rxg5e")
 
 [node name="ShipSprite" type="Sprite2D" parent="." unique_id=2089499856]
 texture = ExtResource("1_hgvjy")
