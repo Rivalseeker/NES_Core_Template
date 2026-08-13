@@ -14,4 +14,5 @@ public class GameData
     public bool Fullscreen { get; set; } = false;
     public bool VSync { get; set; } = true;
     public bool SpriteFlicker { get; set; } = false; // Default to true for authenticity
+    public bool PixelMovement { get; set; } = false;
 }

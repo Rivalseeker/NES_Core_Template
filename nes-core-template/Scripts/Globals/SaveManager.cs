@@ -134,6 +134,9 @@ public partial class SaveManager : Node
         if (mainWindow.IsEmbedded()) return; // Abort if running docked in the editor
 
         DisplayServer.WindowSetVsyncMode(CurrentGameData.VSync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
+        
+        Viewport viewport = GetViewport();
+        viewport.Snap2DTransformsToPixel = CurrentGameData.PixelMovement ? viewport.Snap2DTransformsToPixel = true : viewport.Snap2DTransformsToPixel = false;
 
         if (CurrentGameData.Fullscreen)
         {

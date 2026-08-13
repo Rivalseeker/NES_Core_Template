@@ -51,7 +51,7 @@ _data = {
 &"RESET": SubResource("Animation_2vrav")
 }
 
-[node name="OptionsMenu" type="Control" unique_id=568557062 node_paths=PackedStringArray("_optionsList", "_audioList", "_videoList", "_keyboardButton", "_controllerButton", "_audioButton", "_videoButton", "_backButton", "_masterVolSlider", "_musicVolSlider", "_sfxVolSlider", "_speakerSelector", "_audioBackButton", "_windowSizeSelector", "_fullscreenSelector", "_vsyncSelector", "_flickerSelector", "_videoBackButton", "_confirmPrompt", "_promptYesButton", "_promptNoButton", "_promptCancelButton", "_cursorIcon", "_cursorAnim", "_promptCursor", "_promptCursorAnim")]
+[node name="OptionsMenu" type="Control" unique_id=568557062 node_paths=PackedStringArray("_optionsList", "_audioList", "_videoList", "_keyboardButton", "_controllerButton", "_audioButton", "_videoButton", "_backButton", "_masterVolSlider", "_musicVolSlider", "_sfxVolSlider", "_speakerSelector", "_audioBackButton", "_windowSizeSelector", "_fullscreenSelector", "_vsyncSelector", "_flickerSelector", "_pixelMovementSelector", "_videoBackButton", "_confirmPrompt", "_promptYesButton", "_promptNoButton", "_promptCancelButton", "_cursorIcon", "_cursorAnim", "_promptCursor", "_promptCursorAnim")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,6 +77,7 @@ _windowSizeSelector = NodePath("VideoList/WindowSizeSelector")
 _fullscreenSelector = NodePath("VideoList/FullscreenSelector")
 _vsyncSelector = NodePath("VideoList/VSyncSelector")
 _flickerSelector = NodePath("VideoList/FlickerSelector")
+_pixelMovementSelector = NodePath("VideoList/PixelMovementSelector")
 _videoBackButton = NodePath("VideoList/VideoBackButton")
 _confirmPrompt = NodePath("ConfirmPrompt")
 _promptYesButton = NodePath("ConfirmPrompt/VBoxContainer/HBoxContainer/YesButton")
@@ -279,6 +280,13 @@ ValueLabelMinSize = Vector2(112, 0)
 [node name="FlickerSelector" parent="VideoList" unique_id=1450491670 instance=ExtResource("4_km8a7")]
 layout_mode = 2
 TitleText = "LEGACY SPRITE FLICKER"
+Options = PackedStringArray("OFF", "ON")
+TitleLabelMinSize = Vector2(168, 0)
+ValueLabelMinSize = Vector2(112, 0)
+
+[node name="PixelMovementSelector" parent="VideoList" unique_id=1558555619 instance=ExtResource("4_km8a7")]
+layout_mode = 2
+TitleText = "LEGACY PIXEL MOVEMENT"
 Options = PackedStringArray("OFF", "ON")
 TitleLabelMinSize = Vector2(168, 0)
 ValueLabelMinSize = Vector2(112, 0)

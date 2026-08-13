@@ -33,6 +33,7 @@ public partial class OptionsMenu : Control
     [Export] private RetroSelector _fullscreenSelector;
     [Export] private RetroSelector _vsyncSelector;
     [Export] private RetroSelector _flickerSelector;
+    [Export] private RetroSelector _pixelMovementSelector;
     [Export] private Button _videoBackButton;
 
     [ExportCategory("Confirm Prompt Nodes")]
@@ -99,6 +100,7 @@ public partial class OptionsMenu : Control
         _fullscreenSelector.FocusEntered += () => MoveCursorTo(_fullscreenSelector);
         _vsyncSelector.FocusEntered += () => MoveCursorTo(_vsyncSelector);
         _flickerSelector.FocusEntered += () => MoveCursorTo(_flickerSelector);
+        _pixelMovementSelector.FocusEntered += () => MoveCursorTo(_pixelMovementSelector);
         _videoBackButton.FocusEntered += () => MoveCursorTo(_videoBackButton);
 
         // 5. Wire Cursor Tracking (Prompt)
@@ -113,6 +115,7 @@ public partial class OptionsMenu : Control
 
         // THE FIX: Make sure this line exists so the menu talks to the manager in real-time!
         _flickerSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
+        _pixelMovementSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
 
         // 7. Focus Looping (Wrap-Around)
         _keyboardButton.FocusNeighborTop = _backButton.GetPath();
@@ -316,6 +319,7 @@ public partial class OptionsMenu : Control
         _fullscreenSelector.SetValueNoNotify(d.Fullscreen ? 1 : 0);
         _vsyncSelector.SetValueNoNotify(d.VSync ? 1 : 0);
         _flickerSelector.SetValueNoNotify(d.SpriteFlicker ? 1 : 0);
+        _pixelMovementSelector.SetValueNoNotify(d.PixelMovement ? 1 : 0);
     }
 
     private bool HasVideoChanged()
@@ -326,8 +330,9 @@ public partial class OptionsMenu : Control
         bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
         bool isFlicker = _flickerSelector.CurrentIndex == 1;
+        bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
 
-        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker;
+        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker || isPixelMovement != d.PixelMovement;
     }
 
     private void SaveVideo()
@@ -340,6 +345,7 @@ public partial class OptionsMenu : Control
 
         // 1. Assign to the data model
         d.SpriteFlicker = _flickerSelector.CurrentIndex == 1; 
+        d.PixelMovement = _pixelMovementSelector.CurrentIndex == 1;
         
         // 2. Write to disk
         SaveManager.Instance.SaveGameData();
@@ -450,6 +456,7 @@ public partial class OptionsMenu : Control
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
         int scale = _windowSizeSelector.CurrentIndex + 1;
         bool isFlicker = _flickerSelector.CurrentIndex == 1;
+        bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
 
         // Live pass down to the Autoload Simulation Manager
         if (NESSpriteManager.Instance != null)
@@ -461,6 +468,9 @@ public partial class OptionsMenu : Control
 
         Window mainWindow = GetTree().Root;
         if (mainWindow.IsEmbedded()) return;
+
+        Viewport viewport = GetViewport();
+        viewport.Snap2DTransformsToPixel = isPixelMovement ? viewport.Snap2DTransformsToPixel = true : viewport.Snap2DTransformsToPixel = false;
 
         if (isFullscreen)
         {
