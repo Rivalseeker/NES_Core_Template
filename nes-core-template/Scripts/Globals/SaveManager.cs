@@ -126,7 +126,8 @@ public partial class SaveManager : Node
         // 2. Apply Emulation Settings (NEW)
         if (NESSpriteManager.Instance != null)
         {
-            NESSpriteManager.Instance.FlickerEnabled = CurrentGameData.SpriteFlicker;
+            // NESSpriteManager.Instance.FlickerEnabled = CurrentGameData.SpriteFlicker;
+            NESSpriteManager.Instance.CurrentFlickerMode = (NESSpriteManager.FlickerMode)CurrentGameData.SpriteFlickerMode;
         }
 
         // 3. Apply Video Settings

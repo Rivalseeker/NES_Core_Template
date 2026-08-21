@@ -318,7 +318,8 @@ public partial class OptionsMenu : Control
         _windowSizeSelector.SetValueNoNotify(scaleIndex);
         _fullscreenSelector.SetValueNoNotify(d.Fullscreen ? 1 : 0);
         _vsyncSelector.SetValueNoNotify(d.VSync ? 1 : 0);
-        _flickerSelector.SetValueNoNotify(d.SpriteFlicker ? 1 : 0);
+        // _flickerSelector.SetValueNoNotify(d.SpriteFlicker ? 1 : 0);
+        _flickerSelector.SetValueNoNotify(d.SpriteFlickerMode);
         _pixelMovementSelector.SetValueNoNotify(d.PixelMovement ? 1 : 0);
     }
 
@@ -329,10 +330,12 @@ public partial class OptionsMenu : Control
         int targetScale = _windowSizeSelector.CurrentIndex + 1;
         bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
-        bool isFlicker = _flickerSelector.CurrentIndex == 1;
+        // bool isFlicker = _flickerSelector.CurrentIndex == 1;
+        int currentFlicker = _flickerSelector.CurrentIndex;
         bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
 
-        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker || isPixelMovement != d.PixelMovement;
+        // return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker || isPixelMovement != d.PixelMovement;
+        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || currentFlicker != d.SpriteFlickerMode || isPixelMovement != d.PixelMovement;
     }
 
     private void SaveVideo()
@@ -344,7 +347,8 @@ public partial class OptionsMenu : Control
         d.VSync = _vsyncSelector.CurrentIndex == 1;
 
         // 1. Assign to the data model
-        d.SpriteFlicker = _flickerSelector.CurrentIndex == 1; 
+        // d.SpriteFlicker = _flickerSelector.CurrentIndex == 1;
+        d.SpriteFlickerMode = _flickerSelector.CurrentIndex;
         d.PixelMovement = _pixelMovementSelector.CurrentIndex == 1;
         
         // 2. Write to disk
@@ -353,7 +357,8 @@ public partial class OptionsMenu : Control
         // 3. THE FIX: Push the saved state directly to the live Runtime memory
         if (NESSpriteManager.Instance != null)
         {
-            NESSpriteManager.Instance.FlickerEnabled = d.SpriteFlicker;
+            // NESSpriteManager.Instance.FlickerEnabled = CurrentGameData.SpriteFlicker;
+            NESSpriteManager.Instance.CurrentFlickerMode = (NESSpriteManager.FlickerMode)_flickerSelector.CurrentIndex;
         }
     }
 
@@ -461,7 +466,8 @@ public partial class OptionsMenu : Control
         // Live pass down to the Autoload Simulation Manager
         if (NESSpriteManager.Instance != null)
         {
-            NESSpriteManager.Instance.FlickerEnabled = isFlicker;
+            // NESSpriteManager.Instance.FlickerEnabled = isFlicker;
+            NESSpriteManager.Instance.CurrentFlickerMode = (NESSpriteManager.FlickerMode)_flickerSelector.CurrentIndex;
         }
 
         DisplayServer.WindowSetVsyncMode(isVsync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);

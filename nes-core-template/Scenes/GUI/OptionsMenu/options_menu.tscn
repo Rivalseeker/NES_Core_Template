@@ -280,7 +280,7 @@ ValueLabelMinSize = Vector2(112, 0)
 [node name="FlickerSelector" parent="VideoList" unique_id=1450491670 instance=ExtResource("4_km8a7")]
 layout_mode = 2
 TitleText = "LEGACY SPRITE FLICKER"
-Options = PackedStringArray("OFF", "ON")
+Options = PackedStringArray("OFF", "TYPE-8", "TYPE-16")
 TitleLabelMinSize = Vector2(168, 0)
 ValueLabelMinSize = Vector2(112, 0)
 

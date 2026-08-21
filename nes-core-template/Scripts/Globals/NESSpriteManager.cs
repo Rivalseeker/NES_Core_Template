@@ -8,13 +8,15 @@ public partial class NESSpriteManager : Node
 {
     // Static instance allowing individual sprites to easily register themselves
     public static NESSpriteManager Instance { get; private set; }
+    public enum FlickerMode { Off, Type8, Type16 };
 
     [Export]
-    public bool FlickerEnabled { get; set; } = true;
+    // public bool FlickerEnabled { get; set; } = true;
+    public FlickerMode CurrentFlickerMode { get; set; } = FlickerMode.Type8;
 
     // Adjusted for your project's specific vertical viewport height
     private const int TargetHeight = 216; 
-    private const int MaxSpritesPerScanline = 8;
+    // private const int MaxSpritesPerScanline = 8;
 
     private readonly List<Sprite2D> _activeSprites = new();
 
@@ -35,7 +37,8 @@ public partial class NESSpriteManager : Node
         // On boot, pull the loaded settings profile directly from SaveManager
         if (SaveManager.Instance != null)
         {
-            FlickerEnabled = SaveManager.Instance.CurrentGameData.SpriteFlicker;
+            // FlickerEnabled = SaveManager.Instance.CurrentGameData.SpriteFlicker;
+            CurrentFlickerMode = (FlickerMode)SaveManager.Instance.CurrentGameData.SpriteFlickerMode;
         }
     }
 
@@ -55,7 +58,7 @@ public partial class NESSpriteManager : Node
     public override void _Process(double delta)
     {
         // If the feature is toggled off, reset clipping but DO NOT force visibility
-        if (!FlickerEnabled)
+        if (CurrentFlickerMode == FlickerMode.Off)
         {
             foreach (var sprite in _activeSprites)
             {
@@ -107,7 +110,10 @@ public partial class NESSpriteManager : Node
             {
                 if (y >= 0 && y < TargetHeight)
                 {
-                    if (scanlineCounts[y] >= MaxSpritesPerScanline)
+                    int maxSprites = (CurrentFlickerMode == FlickerMode.Type16) ? 16 : 8;
+
+                    // if (scanlineCounts[y] >= MaxSpritesPerScanline)
+                    if (scanlineCounts[y] >= maxSprites)
                     {
                         // Hardware limit hit for this specific scanline row!
                         if (firstClippedScanline == -1)

@@ -13,6 +13,7 @@ public class GameData
     public int WindowScaleMultiplier { get; set; } = 3; // 3x scale = 1152x648
     public bool Fullscreen { get; set; } = false;
     public bool VSync { get; set; } = true;
-    public bool SpriteFlicker { get; set; } = false; // Default to true for authenticity
+    // public bool SpriteFlicker { get; set; } = false; // Default to true for authenticity
+    public int SpriteFlickerMode { get; set; } = 0;
     public bool PixelMovement { get; set; } = false;
 }
