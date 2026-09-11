@@ -7,27 +7,30 @@ public partial class NesWideSceneBase : Node2D
 
     // References to our nodes
     [ExportCategory("Node References")]
-    [Export] private Camera2D _sceneCamera;
-    [Export] private Sprite2D _sceneCameraBorder;
+    [Export] private Camera2D sceneCamera;
+    [Export] private Sprite2D sceneCameraBorder;
 
     public override void _Ready()
     {
         // Apply the background color immediately when the splash screen loads
         ApplyClearColor(sceneClearColor);
+
+        // Turn on Scene Camera Border
+        sceneCamera.Visible = true;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         // Ensure both nodes exist to prevent null reference errors
-        if (_sceneCamera != null && _sceneCameraBorder != null)
+        if (sceneCamera != null && sceneCameraBorder != null)
         {
-            Vector2 currentZoom = _sceneCamera.Zoom;
+            Vector2 currentZoom = sceneCamera.Zoom;
 
             // Prevent division by zero
             if (currentZoom.X != 0 && currentZoom.Y != 0)
             {
                 // Inverse relationship: as Zoom decreases, Scale increases (and vice versa)
-                _sceneCameraBorder.Scale = new Vector2(
+                sceneCameraBorder.Scale = new Vector2(
                     1.0f / currentZoom.X,
                     1.0f / currentZoom.Y
                 );
