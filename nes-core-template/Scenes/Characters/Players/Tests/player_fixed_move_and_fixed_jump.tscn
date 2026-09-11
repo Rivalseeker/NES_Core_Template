@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bn0mexxxsnilw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfekb"]
+
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885]
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
+shape = SubResource("RectangleShape2D_jfekb")
