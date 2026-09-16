@@ -1,8 +1,165 @@
 [gd_scene format=3 uid="uid://bn0mexxxsnilw"]
 
+[ext_resource type="Texture2D" uid="uid://br4cndu5ljpnu" path="res://Assets/Art/Characters/Players/player_kenny.png" id="1_u2amw"]
+[ext_resource type="Script" uid="uid://cjdklwtavaqm2" path="res://Scripts/Characters/Players/PlayerFixedMoveAndFixedJump.cs" id="1_xep66"]
+[ext_resource type="Script" uid="uid://cgcj0qxay8qum" path="res://Scripts/Utils/NESSprite.cs" id="2_xep66"]
+[ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="3_r1mil"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jfekb"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_r1mil"]
+resource_name = "Fall"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [31]
+}
+
+[sub_resource type="Animation" id="Animation_qjs3a"]
+resource_name = "GroundMove"
+length = 0.19999999999999998
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [30, 29]
+}
+
+[sub_resource type="Animation" id="Animation_uh0cy"]
+resource_name = "Idle"
+length = 0.39999999999999997
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [43, 15, 29, 43]
+}
+
+[sub_resource type="Animation" id="Animation_1p53s"]
+resource_name = "Jump"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [32]
+}
+
+[sub_resource type="Animation" id="Animation_6rhe1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [43]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wmknh"]
+_data = {
+&"Fall": SubResource("Animation_r1mil"),
+&"GroundMove": SubResource("Animation_qjs3a"),
+&"Idle": SubResource("Animation_uh0cy"),
+&"Jump": SubResource("Animation_1p53s"),
+&"RESET": SubResource("Animation_6rhe1")
+}
 
 [node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885]
+script = ExtResource("1_xep66")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_jfekb")
+
+[node name="NESSprite" type="Sprite2D" parent="." unique_id=1601713992]
+texture = ExtResource("1_u2amw")
+centered = false
+offset = Vector2(-8, -16)
+hframes = 7
+vframes = 7
+frame = 43
+script = ExtResource("2_xep66")
+metadata/_custom_type_script = "uid://cgcj0qxay8qum"
+
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=617024961]
+
+[node name="Idle" type="Node" parent="PlayerStateMachine" unique_id=56984385]
+
+[node name="GroundMove" type="Node" parent="PlayerStateMachine" unique_id=1272138694]
+
+[node name="Jump" type="Node" parent="PlayerStateMachine" unique_id=691047396]
+
+[node name="Fall" type="Node" parent="PlayerStateMachine" unique_id=459512925]
+
+[node name="PlayerAnim" type="AnimationPlayer" parent="." unique_id=1478282847]
+libraries/ = SubResource("AnimationLibrary_wmknh")
+
+[node name="PlayerDebug" type="CanvasLayer" parent="." unique_id=1356563555]
+layer = 3
+
+[node name="ColorRect" type="ColorRect" parent="PlayerDebug" unique_id=1365149948]
+offset_right = 104.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7490196)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerDebug/ColorRect" unique_id=44952304]
+layout_mode = 0
+offset_right = 104.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="PlayerState" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=1692661727 instance=ExtResource("3_r1mil")]
+layout_mode = 2
+offset_transform_enabled = true
+text = "IDLE"
+horizontal_alignment = 0
+
+[node name="PlayerVelocityX" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=1183300569 instance=ExtResource("3_r1mil")]
+layout_mode = 2
+offset_transform_enabled = true
+text = "X=0.00"
+horizontal_alignment = 0
+
+[node name="PlayerVelocityY" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=1599998531 instance=ExtResource("3_r1mil")]
+layout_mode = 2
+text = "Y=0.00"
+horizontal_alignment = 0

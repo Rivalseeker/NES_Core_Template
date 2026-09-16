@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="3_1v4uu"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="3_mr4h6"]
 
-[node name="NES_WideSceneBase" type="Node2D" unique_id=40459678]
+[node name="NES_WideSceneBase" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("sceneCamera", "sceneCameraBorder")]
 script = ExtResource("1_nssyu")
 sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
+sceneCamera = NodePath("SceneCamera")
+sceneCameraBorder = NodePath("SceneCamera/SceneCameraBorder")
 
 [node name="Backgrounds" type="Node2D" parent="." unique_id=827817166]
 
@@ -40,6 +42,7 @@ position = Vector2(28, 108)
 texture = ExtResource("3_mr4h6")
 
 [node name="SceneCameraBorder" type="Sprite2D" parent="SceneCamera" unique_id=1872168624]
+visible = false
 texture = ExtResource("3_1v4uu")
 
 [node name="SceneDebug" type="CanvasLayer" parent="." unique_id=665305888]

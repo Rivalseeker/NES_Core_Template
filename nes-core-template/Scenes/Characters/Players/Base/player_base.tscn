@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bxadjcwyiwomx"]
+
+[ext_resource type="Script" uid="uid://cgcj0qxay8qum" path="res://Scripts/Utils/NESSprite.cs" id="1_b4v0k"]
+[ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="2_72ch1"]
+
+[node name="Player_Base" type="CharacterBody2D" unique_id=236456703]
+
+[node name="NESSprite" type="Sprite2D" parent="." unique_id=1938097464]
+script = ExtResource("1_b4v0k")
+metadata/_custom_type_script = "uid://cgcj0qxay8qum"
+
+[node name="PlayerCollision" type="Node" parent="." unique_id=468274185]
+
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=1872482978]
+
+[node name="PlayerAnim" type="AnimationPlayer" parent="." unique_id=1434865194]
+
+[node name="PlayerDebug" type="CanvasLayer" parent="." unique_id=1874190361]
+layer = 3
+
+[node name="ColorRect" type="ColorRect" parent="PlayerDebug" unique_id=76424665]
+offset_right = 104.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7490196)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerDebug/ColorRect" unique_id=972394305]
+layout_mode = 0
+offset_right = 104.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="PlayerState" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=1692661727 instance=ExtResource("2_72ch1")]
+layout_mode = 2
+offset_transform_enabled = true
+text = "IDLE"
+horizontal_alignment = 0
+
+[node name="PlayerVelocityX" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=558191584 instance=ExtResource("2_72ch1")]
+layout_mode = 2
+offset_transform_enabled = true
+text = "X=0.00"
+horizontal_alignment = 0
+
+[node name="PlayerVelocityY" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=451322981 instance=ExtResource("2_72ch1")]
+layout_mode = 2
+text = "Y=0.00"
+horizontal_alignment = 0

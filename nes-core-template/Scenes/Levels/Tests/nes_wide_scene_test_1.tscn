@@ -24,7 +24,7 @@ _data = {
 point_count = 5
 
 [sub_resource type="Animation" id="Animation_hn61s"]
-resource_name = "Camera"
+resource_name = "CameraOrbit"
 length = 12.0
 loop_mode = 1
 step = 0.1
@@ -41,6 +41,24 @@ tracks/0/keys = {
 "values": [0.0, 1.0]
 }
 
+[sub_resource type="Animation" id="Animation_xe2ha"]
+resource_name = "CameraRotate"
+length = 12.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D/SceneCamera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -6.283185307179586]
+}
+
 [sub_resource type="Animation" id="Animation_4l8er"]
 length = 0.001
 tracks/0/type = "value"
@@ -55,10 +73,23 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/SceneCamera:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xe2ha"]
 _data = {
-&"Camera": SubResource("Animation_hn61s"),
+&"CameraOrbit": SubResource("Animation_hn61s"),
+&"CameraRotate": SubResource("Animation_xe2ha"),
 &"RESET": SubResource("Animation_4l8er")
 }
 
@@ -130,4 +161,4 @@ mouse_filter = 2
 [node name="ScenePlayer" type="AnimationPlayer" parent="." unique_id=634535893]
 callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xe2ha")
-autoplay = &"Camera"
+autoplay = &"CameraOrbit"
