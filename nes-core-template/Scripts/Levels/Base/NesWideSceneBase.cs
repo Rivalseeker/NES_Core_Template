@@ -9,6 +9,10 @@ public partial class NesWideSceneBase : Node2D
     [ExportCategory("Node References")]
     [Export] private Camera2D sceneCamera;
     [Export] private Sprite2D sceneCameraBorder;
+    [Export] private ColorRect debugRuler;
+
+
+
 
     public override void _Ready()
     {
@@ -17,7 +21,19 @@ public partial class NesWideSceneBase : Node2D
 
         // Turn on Scene Camera Border
         sceneCamera.Visible = true;
+
+        debugRuler.Visible = false;
     }
+
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("DebugLevelRuler") && debugRuler != null)
+        {
+            debugRuler.Visible = !debugRuler.Visible;
+        }
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {
@@ -37,6 +53,9 @@ public partial class NesWideSceneBase : Node2D
             }
         }
     }
+
+    
+
 
     // Function to change the active viewport's clear color
     private void ApplyClearColor(Color newColor)

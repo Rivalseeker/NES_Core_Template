@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://bn0mexxxsnilw"]
 
-[ext_resource type="Texture2D" uid="uid://br4cndu5ljpnu" path="res://Assets/Art/Characters/Players/player_kenny.png" id="1_u2amw"]
-[ext_resource type="Script" uid="uid://cjdklwtavaqm2" path="res://Scripts/Characters/Players/PlayerFixedMoveAndFixedJump.cs" id="1_xep66"]
+[ext_resource type="Texture2D" uid="uid://br4cndu5ljpnu" path="res://Assets/Art/Characters/Players/Tests/player_kenny.png" id="1_u2amw"]
+[ext_resource type="Script" uid="uid://cjdklwtavaqm2" path="res://Scripts/Characters/Players/Tests/PlayerFixedMoveAndFixedJump.cs" id="1_xep66"]
 [ext_resource type="Script" uid="uid://cgcj0qxay8qum" path="res://Scripts/Utils/NESSprite.cs" id="2_xep66"]
 [ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="3_r1mil"]
+[ext_resource type="Script" uid="uid://bt0vraimaw3a4" path="res://Scripts/StatesAndMachines/Player/Tests/Player_FixedMoveAndFixedJump_StateMachine.cs" id="4_r1mil"]
+[ext_resource type="Script" uid="uid://0hjeqcx20pm5" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerIdle.cs" id="5_qjs3a"]
+[ext_resource type="Script" uid="uid://bbjdh1krwxc5o" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerGroundMove.cs" id="6_uh0cy"]
+[ext_resource type="Script" uid="uid://g4jp7lin0500" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerJump.cs" id="7_1p53s"]
+[ext_resource type="Script" uid="uid://doasxg26f8w1c" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerFall.cs" id="8_6rhe1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jfekb"]
-size = Vector2(16, 16)
+size = Vector2(6, 7)
 
 [sub_resource type="Animation" id="Animation_r1mil"]
 resource_name = "Fall"
@@ -24,10 +29,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [31]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_qjs3a"]
 resource_name = "GroundMove"
-length = 0.19999999999999998
+length = 0.2
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -42,10 +59,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [30, 29]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_uh0cy"]
 resource_name = "Idle"
-length = 0.39999999999999997
+length = 0.4
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -59,6 +88,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [43, 15, 29, 43]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_1p53s"]
@@ -77,6 +118,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [32]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_6rhe1"]
 length = 0.001
@@ -92,6 +145,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [43]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NESSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wmknh"]
 _data = {
@@ -102,11 +167,22 @@ _data = {
 &"RESET": SubResource("Animation_6rhe1")
 }
 
-[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885]
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerStateMachine")]
+floor_constant_speed = true
+floor_snap_length = 2.0
 script = ExtResource("1_xep66")
+moveSpeed = 80.0
+jumpHeight = 40.0
+playerSprite = NodePath("NESSprite")
+playerAnim = NodePath("PlayerAnim")
+PlayerDebugScreen = NodePath("PlayerDebug")
+PlayerStateLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerState")
+PlayerXVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityX")
+PlayerYVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityY")
+PlayerStateMachine = NodePath("PlayerStateMachine")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
-position = Vector2(0, -8)
+position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_jfekb")
 
 [node name="NESSprite" type="Sprite2D" parent="." unique_id=1601713992]
@@ -119,15 +195,22 @@ frame = 43
 script = ExtResource("2_xep66")
 metadata/_custom_type_script = "uid://cgcj0qxay8qum"
 
-[node name="PlayerStateMachine" type="Node" parent="." unique_id=617024961]
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=617024961 node_paths=PackedStringArray("_playerFixedMoveAndFixedJump")]
+script = ExtResource("4_r1mil")
+_initialStatePath = NodePath("Idle")
+_playerFixedMoveAndFixedJump = NodePath("..")
 
 [node name="Idle" type="Node" parent="PlayerStateMachine" unique_id=56984385]
+script = ExtResource("5_qjs3a")
 
 [node name="GroundMove" type="Node" parent="PlayerStateMachine" unique_id=1272138694]
+script = ExtResource("6_uh0cy")
 
 [node name="Jump" type="Node" parent="PlayerStateMachine" unique_id=691047396]
+script = ExtResource("7_1p53s")
 
 [node name="Fall" type="Node" parent="PlayerStateMachine" unique_id=459512925]
+script = ExtResource("8_6rhe1")
 
 [node name="PlayerAnim" type="AnimationPlayer" parent="." unique_id=1478282847]
 libraries/ = SubResource("AnimationLibrary_wmknh")

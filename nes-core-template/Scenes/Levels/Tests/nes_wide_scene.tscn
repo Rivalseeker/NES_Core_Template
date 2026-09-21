@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://ku1pbn8eh880"]
 
-[ext_resource type="Texture2D" uid="uid://dxu2ba3ikp4ai" path="res://Assets/Art/GUI/Cursors/MenuCursor.png" id="1_irubq"]
+[ext_resource type="Texture2D" uid="uid://dxu2ba3ikp4ai" path="res://Assets/Art/GUI/Cursors/Tests/MenuCursor.png" id="1_irubq"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="1_srjbf"]
 [ext_resource type="Script" uid="uid://cgcj0qxay8qum" path="res://Scripts/Utils/NESSprite.cs" id="2_rus61"]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxu2ba3ikp4ai"
-path="res://.godot/imported/MenuCursor.png-ed58130da105fd0a36b317ed032027cc.ctex"
+uid="uid://dnpffxu8gqbdk"
+path="res://.godot/imported/monochrome_tilemap_transparent.png-e1cf61abcee1b2a183c1ebee594febae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/GUI/Cursors/MenuCursor.png"
-dest_files=["res://.godot/imported/MenuCursor.png-ed58130da105fd0a36b317ed032027cc.ctex"]
+source_file="res://Assets/Art/Tilemaps/Tests/monochrome_tilemap_transparent.png"
+dest_files=["res://.godot/imported/monochrome_tilemap_transparent.png-e1cf61abcee1b2a183c1ebee594febae.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kidnd8mlaxc7"
-path="res://.godot/imported/terrain-rocky_3.png-d3786e07ff8cf63f42903170e56d08bd.ctex"
+uid="uid://br4cndu5ljpnu"
+path="res://.godot/imported/player_kenny.png-24111159434c1b79969537d988f6011c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Tilemaps/terrain-rocky_3.png"
-dest_files=["res://.godot/imported/terrain-rocky_3.png-d3786e07ff8cf63f42903170e56d08bd.ctex"]
+source_file="res://Assets/Art/Characters/Players/Tests/player_kenny.png"
+dest_files=["res://.godot/imported/player_kenny.png-24111159434c1b79969537d988f6011c.ctex"]
 
 [params]
 

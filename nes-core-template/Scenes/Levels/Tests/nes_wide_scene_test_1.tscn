@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cokgqrfc33qc" path="res://Scripts/Levels/Tests/NesWideSceneTest1.cs" id="1_hn61s"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="1_p0vtb"]
-[ext_resource type="Texture2D" uid="uid://dnpffxu8gqbdk" path="res://Assets/Art/Tilemaps/monochrome_tilemap_transparent.png" id="2_hn61s"]
+[ext_resource type="Texture2D" uid="uid://dnpffxu8gqbdk" path="res://Assets/Art/Tilemaps/Tests/monochrome_tilemap_transparent.png" id="2_hn61s"]
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="2_ik6pa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4l8er"]

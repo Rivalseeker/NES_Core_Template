@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dp1c220ks0fwl" path="res://Scripts/GUI/OptionsMenu/OptionsMenu.cs" id="1_86bku"]
 [ext_resource type="FontFile" uid="uid://bdcy0d6dekdpf" path="res://Assets/Art/Fonts/Super Mario Bros. NES.ttf" id="1_k6sep"]
-[ext_resource type="Texture2D" uid="uid://dnpffxu8gqbdk" path="res://Assets/Art/Tilemaps/monochrome_tilemap_transparent.png" id="2_jqout"]
+[ext_resource type="Texture2D" uid="uid://dnpffxu8gqbdk" path="res://Assets/Art/Tilemaps/Tests/monochrome_tilemap_transparent.png" id="2_jqout"]
 [ext_resource type="PackedScene" uid="uid://dnqodjg6snpf1" path="res://Scenes/GUI/MenuItems/retro_slider.tscn" id="3_5nw3u"]
 [ext_resource type="PackedScene" uid="uid://5hkng1s1ptkb" path="res://Scenes/GUI/MenuItems/retro_selector.tscn" id="4_km8a7"]
 [ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="5_hb8gb"]
