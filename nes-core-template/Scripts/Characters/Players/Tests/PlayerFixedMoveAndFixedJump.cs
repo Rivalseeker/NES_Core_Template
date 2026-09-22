@@ -11,6 +11,11 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
     [Export] public float jumpHeight = 48.0f; 
     [Export] public float jumpTimeToPeak = 0.4f;
     [Export] public float jumpTimeToDescent = 0.3f; 
+    [Export] public float coyoteTime = 0.1f; // <-- NEW: Time in seconds allowed for a late jump
+
+
+    public bool CanCoyoteJump { get; set; } = false;
+    public double ActiveCoyoteTimer { get; set; } = 0.0;
 
     public float JumpVelocity { get; private set; }
     public float JumpGravity { get; private set; }
@@ -29,6 +34,7 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
     [Export] private Label PlayerStateLabel;
     [Export] private Label PlayerXVelocityLabel;
     [Export] private Label PlayerYVelocityLabel;
+    [Export] private Label PlayerCoyoteTimerLabel;
 
     [Export] public Node PlayerStateMachine { get; set; }
 
@@ -121,6 +127,10 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
                 PlayerStateLabel.Text = currentState.Name.ToString().ToUpper(); 
             }
         }
+
+        // NEW: Update the Coyote Timer label, formatting to 2 decimal places
+        if (PlayerCoyoteTimerLabel != null)
+            PlayerCoyoteTimerLabel.Text = $"COYOTE= {ActiveCoyoteTimer:F3}";
     }
 }
 

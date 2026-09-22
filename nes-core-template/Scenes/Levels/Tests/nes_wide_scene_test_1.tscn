@@ -93,11 +93,12 @@ _data = {
 &"RESET": SubResource("Animation_4l8er")
 }
 
-[node name="NES_WideSceneTest1" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("sceneCamera", "sceneCameraBorder")]
+[node name="NES_WideSceneTest1" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("sceneCamera", "sceneCameraBorder", "debugRuler")]
 script = ExtResource("1_hn61s")
 sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
 sceneCamera = NodePath("Path2D/PathFollow2D/SceneCamera")
 sceneCameraBorder = NodePath("Path2D/PathFollow2D/SceneCamera/SceneCameraBorder")
+debugRuler = NodePath("Path2D/PathFollow2D/SceneCamera/ColorRect")
 
 [node name="Backgrounds" type="Node2D" parent="." unique_id=827817166]
 

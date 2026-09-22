@@ -16,4 +16,5 @@ public class GameData
     // public bool SpriteFlicker { get; set; } = false; // Default to true for authenticity
     public int SpriteFlickerMode { get; set; } = 0;
     public bool PixelMovement { get; set; } = false;
+    public bool CRT_Filter { get; set; } = false;
 }

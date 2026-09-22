@@ -34,6 +34,7 @@ public partial class OptionsMenu : Control
     [Export] private RetroSelector _vsyncSelector;
     [Export] private RetroSelector _flickerSelector;
     [Export] private RetroSelector _pixelMovementSelector;
+    [Export] private RetroSelector _crtSelector;
     [Export] private Button _videoBackButton;
 
     [ExportCategory("Confirm Prompt Nodes")]
@@ -54,6 +55,11 @@ public partial class OptionsMenu : Control
     [Export] private TextureRect _promptCursor;
     [Export] private AnimationPlayer _promptCursorAnim;
     [Export] private Vector2 _promptCursorOffset = new Vector2(-32, 0);
+
+    // ==========================================
+    // NODE REFERENCES
+    // ==========================================
+    // [Export] private CanvasLayer crtFilter;
 
     // ==========================================
     // VIDEO SETTINGS STATE
@@ -101,6 +107,7 @@ public partial class OptionsMenu : Control
         _vsyncSelector.FocusEntered += () => MoveCursorTo(_vsyncSelector);
         _flickerSelector.FocusEntered += () => MoveCursorTo(_flickerSelector);
         _pixelMovementSelector.FocusEntered += () => MoveCursorTo(_pixelMovementSelector);
+        _crtSelector.FocusEntered += () => MoveCursorTo(_crtSelector);
         _videoBackButton.FocusEntered += () => MoveCursorTo(_videoBackButton);
 
         // 5. Wire Cursor Tracking (Prompt)
@@ -116,6 +123,7 @@ public partial class OptionsMenu : Control
         // THE FIX: Make sure this line exists so the menu talks to the manager in real-time!
         _flickerSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
         _pixelMovementSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
+        _crtSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
 
         // 7. Focus Looping (Wrap-Around)
         _keyboardButton.FocusNeighborTop = _backButton.GetPath();
@@ -321,6 +329,7 @@ public partial class OptionsMenu : Control
         // _flickerSelector.SetValueNoNotify(d.SpriteFlicker ? 1 : 0);
         _flickerSelector.SetValueNoNotify(d.SpriteFlickerMode);
         _pixelMovementSelector.SetValueNoNotify(d.PixelMovement ? 1 : 0);
+        _crtSelector.SetValueNoNotify(d.CRT_Filter ? 1 : 0);
     }
 
     private bool HasVideoChanged()
@@ -333,9 +342,10 @@ public partial class OptionsMenu : Control
         // bool isFlicker = _flickerSelector.CurrentIndex == 1;
         int currentFlicker = _flickerSelector.CurrentIndex;
         bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
+        bool isCrt = _crtSelector.CurrentIndex == 1;
 
         // return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker || isPixelMovement != d.PixelMovement;
-        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || currentFlicker != d.SpriteFlickerMode || isPixelMovement != d.PixelMovement;
+        return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || currentFlicker != d.SpriteFlickerMode || isPixelMovement != d.PixelMovement || isCrt != d.CRT_Filter;
     }
 
     private void SaveVideo()
@@ -350,6 +360,7 @@ public partial class OptionsMenu : Control
         // d.SpriteFlicker = _flickerSelector.CurrentIndex == 1;
         d.SpriteFlickerMode = _flickerSelector.CurrentIndex;
         d.PixelMovement = _pixelMovementSelector.CurrentIndex == 1;
+        d.CRT_Filter = _crtSelector.CurrentIndex == 1;
         
         // 2. Write to disk
         SaveManager.Instance.SaveGameData();
@@ -460,8 +471,9 @@ public partial class OptionsMenu : Control
         bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
         int scale = _windowSizeSelector.CurrentIndex + 1;
-        bool isFlicker = _flickerSelector.CurrentIndex == 1;
+        // bool isFlicker = _flickerSelector.CurrentIndex == 1;
         bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
+        bool isCrt = _crtSelector.CurrentIndex == 1;
 
         // Live pass down to the Autoload Simulation Manager
         if (NESSpriteManager.Instance != null)
@@ -494,6 +506,18 @@ public partial class OptionsMenu : Control
             Vector2I centerPos = screenPos + (screenSize / 2) - (newSize / 2);
             centerPos.Y = Mathf.Max(0, centerPos.Y);
             mainWindow.Position = centerPos;
+        }
+
+        // ADDED: Safely fetch the CRTLayer from the scene tree and apply visibility
+        CanvasLayer crtFilter = GetTree().Root.FindChild("CRT_Layer", true, false) as CanvasLayer;
+        
+        if (crtFilter != null)
+        {
+            crtFilter.Visible = isCrt;
+        }
+        else
+        {
+            GD.PrintErr("OptionsMenu: CRTLayer could not be found in the active Scene Tree.");
         }
     }
 

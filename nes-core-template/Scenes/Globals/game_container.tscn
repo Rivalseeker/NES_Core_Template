@@ -16,12 +16,13 @@ shader = ExtResource("7_lex5l")
 shader_parameter/scanline_count = 216.0
 shader_parameter/scanline_opacity = 0.25
 
-[node name="GameContainer" type="Node" unique_id=930406646 node_paths=PackedStringArray("_world2D", "_guiLayer", "_loadingScreenLayer", "_debugLayer")]
+[node name="GameContainer" type="Node" unique_id=930406646 node_paths=PackedStringArray("_world2D", "_guiLayer", "_loadingScreenLayer", "_debugLayer", "_crtFilterLayer")]
 script = ExtResource("1_6bq7i")
 _world2D = NodePath("World2D")
 _guiLayer = NodePath("GUI")
 _loadingScreenLayer = NodePath("LoadingScreen")
 _debugLayer = NodePath("GamePerformanceDebug")
+_crtFilterLayer = NodePath("CRT_Layer")
 _loadingScreenPrefab = ExtResource("2_a3xfu")
 
 [node name="World2D" type="Node2D" parent="." unique_id=1744169343]
@@ -65,11 +66,11 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 horizontal_alignment = 2
 
-[node name="CRTLayer" type="CanvasLayer" parent="." unique_id=1186419829]
+[node name="CRT_Layer" type="CanvasLayer" parent="." unique_id=1186419829]
 layer = 150
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="CRTLayer" unique_id=58829090]
+[node name="ColorRect" type="ColorRect" parent="CRT_Layer" unique_id=58829090]
 material = SubResource("ShaderMaterial_003uw")
 anchors_preset = 15
 anchor_right = 1.0

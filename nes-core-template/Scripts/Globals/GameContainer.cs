@@ -10,6 +10,7 @@ public partial class GameContainer : Node
     [Export] private CanvasLayer _guiLayer;
     [Export] private CanvasLayer _loadingScreenLayer;
     [Export] private CanvasLayer _debugLayer;
+    [Export] private CanvasLayer _crtFilterLayer;
 
     [Export] private PackedScene _loadingScreenPrefab; 
 
@@ -23,6 +24,8 @@ public partial class GameContainer : Node
         SceneManager.Instance.LoadingScreenLayer = _loadingScreenLayer;
         SceneManager.Instance.LoadingScreenPrefab = _loadingScreenPrefab;
 
+        ApplyInitialCRTFilter();
+
         GetTree().Root.SizeChanged += OnWindowSizeChanged;
         
         // Wait 2 process frames before calculating layout to allow 
@@ -31,6 +34,17 @@ public partial class GameContainer : Node
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         OnWindowSizeChanged();
+    }
+
+    private void ApplyInitialCRTFilter()
+    {
+        // Auto-fetch child node if not linked manually in the Inspector
+        _crtFilterLayer ??= GetNodeOrNull<CanvasLayer>("CRT_Filter");
+
+        if (SaveManager.Instance?.CurrentGameData != null && _crtFilterLayer != null)
+        {
+            _crtFilterLayer.Visible = SaveManager.Instance.CurrentGameData.CRT_Filter;
+        }
     }
 
     private void OnWindowSizeChanged()

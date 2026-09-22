@@ -14,6 +14,7 @@ config/name="NES_Core_Template"
 config/tags=PackedStringArray("starterkit")
 run/main_scene="uid://bp4yx3qkbqsau"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [audio]

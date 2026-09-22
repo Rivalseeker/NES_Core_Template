@@ -2,13 +2,19 @@ using Godot;
 
 public partial class PlayerIdle : Player_FixedMoveAndJump_State
 {
+    private int _physicsFrames = 0; // Tracks frames spent in the Idle state
+
     public override void Enter()
     {
+        // GD.Print("IDLE");
+
         playerFMFJ.PlayAnimation("Idle");
         playerFMFJ.IsIdle = true;
         
         // Stop horizontal momentum immediately upon entering Idle
         playerFMFJ.Velocity = new Vector2(0, playerFMFJ.Velocity.Y);
+        
+        _physicsFrames = 0; // Reset counter every time Idle is entered
     }
 
     public override void Exit()
@@ -20,10 +26,19 @@ public partial class PlayerIdle : Player_FixedMoveAndJump_State
     {
         if (playerFMFJ == null) return;
 
-        if (!playerFMFJ.IsOnFloor())
+        // Delay the floor check by 1 frame so MoveAndSlide() can populate IsOnFloor()
+        if (_physicsFrames > 0 && !playerFMFJ.IsOnFloor())
         {
+            playerFMFJ.CanCoyoteJump = true;
+
             EmitSignal(SignalName.Transitioned, this, "Fall");
             return;
+        }
+        
+        // Increment the frame counter after the initial bypass check
+        if (_physicsFrames == 0)
+        {
+            _physicsFrames++;
         }
 
         if (Input.IsActionJustPressed("Jump"))
@@ -38,53 +53,3 @@ public partial class PlayerIdle : Player_FixedMoveAndJump_State
         }
     }
 }
-
-
-
-
-
-
-// using Godot;
-
-// public partial class PlayerIdle : Player_FixedMoveAndJump_State
-// {
-//     public override void Enter()
-//     {
-//         playerFMFJ.PlayAnimation("Idle");
-
-//         playerFMFJ.IsIdle = true;
-
-//         playerFMFJ.Velocity = new Vector2(0, playerFMFJ.Velocity.Y);
-//     }
-
-//     public override void Exit()
-//     {
-//         playerFMFJ.IsIdle = false;
-//     }
-
-//     public override void PhysicsUpdate(double delta)
-//     {
-//         if (playerFMFJ == null) return;
-
-//         if (!playerFMFJ.IsOnFloor())
-//         {
-//             EmitSignal(SignalName.Transitioned, this, "Fall");
-//             // Player.CurrentJumps++;
-//             return;
-//         }
-
-//         if (Input.IsActionJustPressed("Jump"))
-//         {
-//             EmitSignal(SignalName.Transitioned, this, "Jump");
-//         }
-
-//         float direction = Input.GetAxis("Left", "Right");
-//         if (direction != 0)
-//         {
-//             EmitSignal(SignalName.Transitioned, this, "GroundMove");
-//         }
-
-//         playerFMFJ.UpdateFacingDirection(direction);
-//         playerFMFJ.Velocity = new Vector2(direction * playerFMFJ.moveSpeed, playerFMFJ.Velocity.Y);
-//     }
-// }

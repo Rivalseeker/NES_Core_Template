@@ -167,18 +167,22 @@ _data = {
 &"RESET": SubResource("Animation_6rhe1")
 }
 
-[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerStateMachine")]
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
 floor_constant_speed = true
 floor_snap_length = 2.0
 script = ExtResource("1_xep66")
-moveSpeed = 80.0
-jumpHeight = 40.0
+moveSpeed = 84.0
+jumpHeight = 36.0
+jumpTimeToPeak = 0.41
+jumpTimeToDescent = 0.31
+coyoteTime = 0.04
 playerSprite = NodePath("NESSprite")
 playerAnim = NodePath("PlayerAnim")
 PlayerDebugScreen = NodePath("PlayerDebug")
 PlayerStateLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerState")
 PlayerXVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityX")
 PlayerYVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityY")
+PlayerCoyoteTimerLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerCoyoteTimer")
 PlayerStateMachine = NodePath("PlayerStateMachine")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
@@ -194,6 +198,8 @@ vframes = 7
 frame = 43
 script = ExtResource("2_xep66")
 metadata/_custom_type_script = "uid://cgcj0qxay8qum"
+
+[node name="CameraRemote" type="RemoteTransform2D" parent="." unique_id=1553043872]
 
 [node name="PlayerStateMachine" type="Node" parent="." unique_id=617024961 node_paths=PackedStringArray("_playerFixedMoveAndFixedJump")]
 script = ExtResource("4_r1mil")
@@ -245,4 +251,9 @@ horizontal_alignment = 0
 [node name="PlayerVelocityY" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=1599998531 instance=ExtResource("3_r1mil")]
 layout_mode = 2
 text = "Y=0.00"
+horizontal_alignment = 0
+
+[node name="PlayerCoyoteTimer" parent="PlayerDebug/ColorRect/VBoxContainer" unique_id=340457844 instance=ExtResource("3_r1mil")]
+layout_mode = 2
+text = "0.00"
 horizontal_alignment = 0

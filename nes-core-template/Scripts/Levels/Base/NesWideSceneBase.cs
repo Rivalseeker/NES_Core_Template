@@ -3,13 +3,19 @@ using System;
 
 public partial class NesWideSceneBase : Node2D
 {
-    [Export] private Color sceneClearColor = new Color(0, 0, 0, 1);
+    [Export] public Color sceneClearColor = new Color(0, 0, 0, 1);
+
+    [ExportGroup("Spawning Options")]
+    [Export] 
+    public PackedScene playerScene;
+
+    public Node2D spawnedPlayer;
 
     // References to our nodes
     [ExportCategory("Node References")]
-    [Export] private Camera2D sceneCamera;
-    [Export] private Sprite2D sceneCameraBorder;
-    [Export] private ColorRect debugRuler;
+    [Export] public Camera2D sceneCamera;
+    [Export] public Sprite2D sceneCameraBorder;
+    [Export] public ColorRect debugRuler;
 
 
 
@@ -23,6 +29,8 @@ public partial class NesWideSceneBase : Node2D
         sceneCamera.Visible = true;
 
         debugRuler.Visible = false;
+
+        SpawnPlayer();
     }
 
 
@@ -62,5 +70,43 @@ public partial class NesWideSceneBase : Node2D
     {
         // This updates the actual rendering server immediately
         RenderingServer.SetDefaultClearColor(newColor);
+    }
+
+
+    public virtual void SpawnPlayer()
+    {
+        // Check if a PackedScene was assigned in the Inspector; if not, try loading it automatically
+        playerScene ??= GD.Load<PackedScene>("res://Scenes/Characters/Players/Tests/player_fixed_move_and_fixed_jump.tscn");
+
+        if (playerScene == null)
+        {
+            GD.PrintErr("NesPlatformerScene2: Player scene could not be found or loaded.");
+            return;
+        }
+
+        // Fetch references to the container and spawner nodes based on scene structure
+        Node2D playersContainer = GetNodeOrNull<Node2D>("Entities/Players");
+        Marker2D playerSpawner = GetNodeOrNull<Marker2D>("Spawners/PlayerSpawner");
+
+        if (playersContainer == null)
+        {
+            GD.PrintErr("NesPlatformerScene2: 'Entities/Players' node not found.");
+            return;
+        }
+
+        if (playerSpawner == null)
+        {
+            GD.PrintErr("NesPlatformerScene2: 'Spawners/PlayerSpawner' node not found.");
+            return;
+        }
+
+        // Instantiate the player character and store the reference
+        spawnedPlayer = playerScene.Instantiate<Node2D>();
+
+        // Set the position to match the Marker2D's global position
+        spawnedPlayer.GlobalPosition = playerSpawner.GlobalPosition;
+
+        // Add the player instance as a child of the Players Node2D container
+        playersContainer.AddChild(spawnedPlayer);
     }
 }

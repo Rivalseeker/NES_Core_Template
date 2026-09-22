@@ -19,6 +19,8 @@ public partial class PlayerGroundMove : Player_FixedMoveAndJump_State
 
         if (!playerFMFJ.IsOnFloor())
         {
+            playerFMFJ.CanCoyoteJump = true;
+
             EmitSignal(SignalName.Transitioned, this, "Fall");
             return;
         }
