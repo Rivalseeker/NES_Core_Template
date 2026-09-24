@@ -1,8 +1,31 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class NesWideSceneTest2 : NesWideSceneBase
 {
+    public override void _Ready()
+    {
+        // Apply the background color immediately when the splash screen loads
+        ApplyClearColor(sceneClearColor);
+
+        // Turn on Scene Camera Border
+        sceneCamera.Visible = true;
+
+        debugRuler.Visible = false;
+
+        if (playerSpawnerGroup != null)
+        {
+            foreach (Node child in playerSpawnerGroup.GetChildren())
+            {
+                child.QueueFree();
+            }
+        }
+
+        SpawnPlayer();
+    }
+
+
     public override void _PhysicsProcess(double delta)
     {
         // NEW: Make the scene camera track the spawned player's position
@@ -42,7 +65,7 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
 
         // Fetch references to the container and spawner nodes based on scene structure
         Node2D playersContainer = GetNodeOrNull<Node2D>("Entities/Players");
-        Marker2D playerSpawner = GetNodeOrNull<Marker2D>("Spawners/PlayerSpawner");
+        Marker2D playerSpawner = GetNodeOrNull<Marker2D>("Spawners/PlayerSpawnerGroup/PlayerSpawner");
 
         if (playersContainer == null)
         {
@@ -52,7 +75,7 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
 
         if (playerSpawner == null)
         {
-            GD.PrintErr("NesPlatformerScene2: 'Spawners/PlayerSpawner' node not found.");
+            GD.PrintErr("NesPlatformerScene2: 'Spawners/PlayerSpawnerGroup/PlayerSpawner' node not found.");
             return;
         }
 

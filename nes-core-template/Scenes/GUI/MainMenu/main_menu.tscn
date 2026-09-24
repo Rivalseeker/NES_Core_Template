@@ -64,7 +64,7 @@ _quitButton = NodePath("MainMenuList/QuitButton")
 _cursorIcon = NodePath("CursorIcon")
 _cursorAnim = NodePath("CursorIcon/CursorAnim")
 _cursorOffset = Vector2(-16, 0)
-_mainGamePath = "uid://btav01b8e5hm1"
+_mainGamePath = "uid://8bwbboypslwa"
 _optionsPath = "uid://cosd58fqpvniu"
 
 [node name="MainMenuList" type="VBoxContainer" parent="." unique_id=346001578]

@@ -9,7 +9,7 @@
 [ext_resource type="Shader" uid="uid://ttm4ry020ieo" path="res://Scripts/Shaders/crt_layer.gdshader" id="7_lex5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmrv8"]
-bg_color = Color(0, 0, 0, 0.5019608)
+bg_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_003uw"]
 shader = ExtResource("7_lex5l")

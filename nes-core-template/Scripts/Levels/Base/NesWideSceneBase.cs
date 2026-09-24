@@ -13,6 +13,8 @@ public partial class NesWideSceneBase : Node2D
 
     // References to our nodes
     [ExportCategory("Node References")]
+    // [Export] public Node2D playersContainer;
+    [Export] public Node2D playerSpawnerGroup;
     [Export] public Camera2D sceneCamera;
     [Export] public Sprite2D sceneCameraBorder;
     [Export] public ColorRect debugRuler;
@@ -66,7 +68,7 @@ public partial class NesWideSceneBase : Node2D
 
 
     // Function to change the active viewport's clear color
-    private void ApplyClearColor(Color newColor)
+    public void ApplyClearColor(Color newColor)
     {
         // This updates the actual rendering server immediately
         RenderingServer.SetDefaultClearColor(newColor);

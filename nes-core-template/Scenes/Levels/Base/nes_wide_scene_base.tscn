@@ -4,11 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="3_1v4uu"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="3_mr4h6"]
 
-[node name="NES_WideSceneBase" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("sceneCamera", "sceneCameraBorder")]
+[node name="NES_WideSceneBase" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("sceneCamera", "sceneCameraBorder", "debugRuler")]
 script = ExtResource("1_nssyu")
 sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
 sceneCamera = NodePath("SceneCamera")
 sceneCameraBorder = NodePath("SceneCamera/SceneCameraBorder")
+debugRuler = NodePath("SceneDebug/RulerRect")
 
 [node name="Backgrounds" type="Node2D" parent="." unique_id=827817166]
 
@@ -27,20 +28,6 @@ limit_right = 384
 limit_bottom = 0
 editor_draw_limits = true
 
-[node name="ColorRect" type="ColorRect" parent="SceneCamera" unique_id=962569292]
-visible = false
-offset_left = -60.0
-offset_top = -108.0
-offset_right = -4.0
-offset_bottom = 108.0
-mouse_filter = 2
-color = Color(0, 0, 0, 0.25)
-
-[node name="VertRuler" type="Sprite2D" parent="SceneCamera/ColorRect" unique_id=1006698304]
-modulate = Color(1, 1, 1, 0.75000006)
-position = Vector2(28, 108)
-texture = ExtResource("3_mr4h6")
-
 [node name="SceneCameraBorder" type="Sprite2D" parent="SceneCamera" unique_id=1872168624]
 visible = false
 texture = ExtResource("3_1v4uu")
@@ -56,3 +43,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="RulerRect" type="ColorRect" parent="SceneDebug" unique_id=962569292]
+offset_left = 132.0
+offset_right = 188.0
+offset_bottom = 216.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="VertRuler" type="Sprite2D" parent="SceneDebug/RulerRect" unique_id=1006698304]
+modulate = Color(1, 1, 1, 0.75000006)
+position = Vector2(28, 108)
+texture = ExtResource("3_mr4h6")

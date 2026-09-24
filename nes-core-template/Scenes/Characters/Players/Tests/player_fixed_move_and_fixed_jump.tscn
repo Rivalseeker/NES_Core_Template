@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bbjdh1krwxc5o" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerGroundMove.cs" id="6_uh0cy"]
 [ext_resource type="Script" uid="uid://g4jp7lin0500" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerJump.cs" id="7_1p53s"]
 [ext_resource type="Script" uid="uid://doasxg26f8w1c" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerFall.cs" id="8_6rhe1"]
+[ext_resource type="Script" uid="uid://bnbwb37c2f3yj" path="res://Scripts/Utils/Tests/JumpArcVisualizer.cs" id="10_wmknh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jfekb"]
 size = Vector2(6, 7)
@@ -167,7 +168,7 @@ _data = {
 &"RESET": SubResource("Animation_6rhe1")
 }
 
-[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "JumpArc", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
 floor_constant_speed = true
 floor_snap_length = 2.0
 script = ExtResource("1_xep66")
@@ -179,6 +180,7 @@ coyoteTime = 0.04
 playerSprite = NodePath("NESSprite")
 playerAnim = NodePath("PlayerAnim")
 PlayerDebugScreen = NodePath("PlayerDebug")
+JumpArc = NodePath("JumpArc")
 PlayerStateLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerState")
 PlayerXVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityX")
 PlayerYVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityY")
@@ -228,7 +230,7 @@ layer = 3
 offset_right = 104.0
 offset_bottom = 40.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.7490196)
+color = Color(0, 0, 0, 0.5)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerDebug/ColorRect" unique_id=44952304]
 layout_mode = 0
@@ -257,3 +259,9 @@ horizontal_alignment = 0
 layout_mode = 2
 text = "0.00"
 horizontal_alignment = 0
+
+[node name="JumpArc" type="Node2D" parent="." unique_id=720988466]
+script = ExtResource("10_wmknh")
+ArcColor = Color(0.8743342, 0.7148392, 0, 0.8509804)
+LineWidth = 1.0
+MirrorBothDirections = false

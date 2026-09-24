@@ -31,6 +31,7 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
 
     [ExportCategory("Debug")]
     [Export] private CanvasLayer PlayerDebugScreen;
+    [Export] private Node2D JumpArc;
     [Export] private Label PlayerStateLabel;
     [Export] private Label PlayerXVelocityLabel;
     [Export] private Label PlayerYVelocityLabel;
@@ -51,13 +52,26 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
         {
             PlayerDebugScreen.Visible = false;
         }
+
+        if (JumpArc != null)
+        {
+            JumpArc.Visible = false;
+        }
     }
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("DebugPlayer") && PlayerDebugScreen != null)
+        if (Input.IsActionJustPressed("DebugPlayer"))
         {
-            PlayerDebugScreen.Visible = !PlayerDebugScreen.Visible;
+            if (PlayerDebugScreen != null)
+            {
+                PlayerDebugScreen.Visible = !PlayerDebugScreen.Visible;
+            }
+
+            if (JumpArc != null)
+            {
+                JumpArc.Visible = !JumpArc.Visible;
+            }
         }
 
         if (PlayerDebugScreen != null && PlayerDebugScreen.Visible)
@@ -95,11 +109,13 @@ public partial class PlayerFixedMoveAndFixedJump : CharacterBody2D
         {
             FacingDirection = 1;
             playerSprite.FlipH = false;
+            JumpArc.Scale = new Vector2(1f, 1f);
         }
         else if (inputX < 0)
         {
             FacingDirection = -1;
             playerSprite.FlipH = true;
+            JumpArc.Scale = new Vector2(-1f, 1f);
         }
     }
 
