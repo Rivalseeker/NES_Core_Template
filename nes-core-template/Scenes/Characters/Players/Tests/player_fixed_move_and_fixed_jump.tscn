@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bbjdh1krwxc5o" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerGroundMove.cs" id="6_uh0cy"]
 [ext_resource type="Script" uid="uid://g4jp7lin0500" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerJump.cs" id="7_1p53s"]
 [ext_resource type="Script" uid="uid://doasxg26f8w1c" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerFall.cs" id="8_6rhe1"]
+[ext_resource type="Script" uid="uid://dvfx1xd1i3e8" path="res://Scripts/StatesAndMachines/Player/Tests/PlayerGoal.cs" id="9_660fy"]
 [ext_resource type="Script" uid="uid://bnbwb37c2f3yj" path="res://Scripts/Utils/Tests/JumpArcVisualizer.cs" id="10_wmknh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jfekb"]
@@ -168,7 +169,45 @@ _data = {
 &"RESET": SubResource("Animation_6rhe1")
 }
 
-[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "JumpArc", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
+[sub_resource type="Animation" id="Animation_660fy"]
+resource_name = "Goal"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:self_modulate")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.8), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0.4), Color(1, 1, 1, 0.2), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5iv8k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NESSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7p61"]
+_data = {
+&"Goal": SubResource("Animation_660fy"),
+&"RESET": SubResource("Animation_5iv8k")
+}
+
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "playerGoalAnim", "PlayerDebugScreen", "JumpArc", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
+collision_layer = 2
 floor_constant_speed = true
 floor_snap_length = 2.0
 script = ExtResource("1_xep66")
@@ -179,6 +218,7 @@ jumpTimeToDescent = 0.31
 coyoteTime = 0.04
 playerSprite = NodePath("NESSprite")
 playerAnim = NodePath("PlayerAnim")
+playerGoalAnim = NodePath("PlayerGoalAnim")
 PlayerDebugScreen = NodePath("PlayerDebug")
 JumpArc = NodePath("JumpArc")
 PlayerStateLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerState")
@@ -186,10 +226,6 @@ PlayerXVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVeloc
 PlayerYVelocityLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerVelocityY")
 PlayerCoyoteTimerLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerCoyoteTimer")
 PlayerStateMachine = NodePath("PlayerStateMachine")
-
-[node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
-position = Vector2(0, -3.5)
-shape = SubResource("RectangleShape2D_jfekb")
 
 [node name="NESSprite" type="Sprite2D" parent="." unique_id=1601713992]
 texture = ExtResource("1_u2amw")
@@ -200,6 +236,10 @@ vframes = 7
 frame = 43
 script = ExtResource("2_xep66")
 metadata/_custom_type_script = "uid://cgcj0qxay8qum"
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1488270030]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_jfekb")
 
 [node name="CameraRemote" type="RemoteTransform2D" parent="." unique_id=1553043872]
 
@@ -220,8 +260,14 @@ script = ExtResource("7_1p53s")
 [node name="Fall" type="Node" parent="PlayerStateMachine" unique_id=459512925]
 script = ExtResource("8_6rhe1")
 
+[node name="Goal" type="Node" parent="PlayerStateMachine" unique_id=1313591436]
+script = ExtResource("9_660fy")
+
 [node name="PlayerAnim" type="AnimationPlayer" parent="." unique_id=1478282847]
 libraries/ = SubResource("AnimationLibrary_wmknh")
+
+[node name="PlayerGoalAnim" type="AnimationPlayer" parent="." unique_id=157578719]
+libraries/ = SubResource("AnimationLibrary_k7p61")
 
 [node name="PlayerDebug" type="CanvasLayer" parent="." unique_id=1356563555]
 layer = 3
@@ -230,7 +276,7 @@ layer = 3
 offset_right = 104.0
 offset_bottom = 40.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.5)
+color = Color(0, 0, 0, 0.25)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerDebug/ColorRect" unique_id=44952304]
 layout_mode = 0

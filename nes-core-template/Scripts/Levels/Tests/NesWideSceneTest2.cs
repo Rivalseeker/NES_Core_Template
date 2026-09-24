@@ -4,6 +4,10 @@ using Godot.Collections;
 
 public partial class NesWideSceneTest2 : NesWideSceneBase
 {
+    [Export] private Area2D goalArea;
+    [Export] private AnimationPlayer goalAnim;
+    [Export(PropertyHint.File, "*.tscn")] private string nextLevelPath;
+
     public override void _Ready()
     {
         // Apply the background color immediately when the splash screen loads
@@ -22,13 +26,21 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
             }
         }
 
+        // Auto-fetch GoalArea node if not assigned in Inspector
+        goalArea ??= GetNodeOrNull<Area2D>("GoalArea");
+
+        // Connect the BodyEntered signal
+        if (goalArea != null)
+        {
+            goalArea.BodyEntered += OnGoalAreaBodyEntered;
+        }
+
         SpawnPlayer();
     }
 
-
     public override void _PhysicsProcess(double delta)
     {
-        // NEW: Make the scene camera track the spawned player's position
+        // Make the scene camera track the spawned player's position
         if (sceneCamera != null && spawnedPlayer != null)
         {
             sceneCamera.GlobalPosition = spawnedPlayer.GlobalPosition;
@@ -39,10 +51,8 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
         {
             Vector2 currentZoom = sceneCamera.Zoom;
 
-            // Prevent division by zero
             if (currentZoom.X != 0 && currentZoom.Y != 0)
             {
-                // Inverse relationship: as Zoom decreases, Scale increases (and vice versa)
                 sceneCameraBorder.Scale = new Vector2(
                     1.0f / currentZoom.X,
                     1.0f / currentZoom.Y
@@ -51,10 +61,8 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
         }
     }
 
-
     public override void SpawnPlayer()
     {
-        // Check if a PackedScene was assigned in the Inspector; if not, try loading it automatically
         playerScene ??= GD.Load<PackedScene>("res://Scenes/Characters/Players/Tests/player_fixed_move_and_fixed_jump.tscn");
 
         if (playerScene == null)
@@ -63,7 +71,6 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
             return;
         }
 
-        // Fetch references to the container and spawner nodes based on scene structure
         Node2D playersContainer = GetNodeOrNull<Node2D>("Entities/Players");
         Marker2D playerSpawner = GetNodeOrNull<Marker2D>("Spawners/PlayerSpawnerGroup/PlayerSpawner");
 
@@ -79,22 +86,56 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
             return;
         }
 
-        // Instantiate the player character and store the reference
         spawnedPlayer = playerScene.Instantiate<Node2D>();
-
-        // Set the position to match the Marker2D's global position
         spawnedPlayer.GlobalPosition = playerSpawner.GlobalPosition;
-
-        // Add the player instance as a child of the Players Node2D container
         playersContainer.AddChild(spawnedPlayer);
 
-        // Fetch the RemoteTransform2D from the newly spawned player
         RemoteTransform2D remoteTransform = spawnedPlayer.GetNode<RemoteTransform2D>("CameraRemote");
         
-        // Assign the scene camera to the remote transform
         if (remoteTransform != null && sceneCamera != null)
         {
             remoteTransform.RemotePath = remoteTransform.GetPathTo(sceneCamera);
+        }
+    }
+
+    private void OnGoalAreaBodyEntered(Node2D body)
+    {
+        if (body is PlayerFixedMoveAndFixedJump player)
+        {
+            // 1. Snap player global position to GoalArea global position
+            player.GlobalPosition = goalArea.GlobalPosition;
+
+            // 2. Lock player state to "Goal" so no further inputs or movements occur
+            if (player.PlayerStateMachine is Player_FixedMoveAndFixedJump_StateMachine stateMachine)
+            {
+                stateMachine.ForceTransition("Goal");
+
+                goalAnim.Play("Goal");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Swaps the current scene out for a new Node2D level scene via SceneManager.
+    /// Can be called directly by an AnimationPlayer Call Method track.
+    /// </summary>
+    public void LoadNextScene()
+    {
+        // string path = !string.IsNullOrEmpty(targetPath) ? targetPath : nextScenePath;
+
+        // if (string.IsNullOrEmpty(path))
+        // {
+        //     GD.PrintErr("NesWideSceneTest2: No target scene path specified for scene transition.");
+        //     return;
+        // }
+
+        if (SceneManager.Instance != null)
+        {
+            SceneManager.Instance.LoadSceneAsync(nextLevelPath);
+        }
+        else
+        {
+            GD.PrintErr("NesWideSceneTest2: SceneManager.Instance is null. Ensure SceneManager is initialized.");
         }
     }
 }

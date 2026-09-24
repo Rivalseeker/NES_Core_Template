@@ -7,8 +7,65 @@
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="3_h28e7"]
 [ext_resource type="Script" uid="uid://cfen1dos04ob7" path="res://Scripts/Utils/Tests/ExampleCamera.cs" id="4_rgv3i"]
 
-[node name="NES_WideSceneTest2" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("playerSpawnerGroup", "sceneCamera", "sceneCameraBorder", "debugRuler")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_us00r"]
+size = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_rgv3i"]
+resource_name = "Goal"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.8), Color(1, 1, 1, 0.6), Color(1, 1, 1, 0.4), Color(1, 1, 1, 0.2), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"LoadNextScene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_kyfsr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gr7vw"]
+_data = {
+&"Goal": SubResource("Animation_rgv3i"),
+&"RESET": SubResource("Animation_kyfsr")
+}
+
+[node name="NES_WideSceneTest2" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("goalArea", "goalAnim", "playerSpawnerGroup", "sceneCamera", "sceneCameraBorder", "debugRuler")]
 script = ExtResource("1_n3fwf")
+goalArea = NodePath("Entities/Gizmos/GoalDoor/GoalArea")
+goalAnim = NodePath("Entities/Players/PlayerGoalAnim")
+nextLevelPath = "uid://btav01b8e5hm1"
 sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
 playerScene = ExtResource("2_38rtr")
 playerSpawnerGroup = NodePath("Spawners/PlayerSpawnerGroup")
@@ -33,14 +90,30 @@ position = Vector2(1448, -128)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-8, 0, -8, -32, 8, -32, 8, 0)
 
+[node name="Arrow" type="Polygon2D" parent="Entities/Gizmos/GoalDoor" unique_id=50236266]
+polygon = PackedVector2Array(-16, -16, -32, -28, -32, -20, -48, -20, -48, -12, -32, -12, -32, -4)
+
+[node name="GoalArea" type="Area2D" parent="Entities/Gizmos/GoalDoor" unique_id=1471157441]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="GoalDetect" type="CollisionShape2D" parent="Entities/Gizmos/GoalDoor/GoalArea" unique_id=1385915299]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_us00r")
+debug_color = Color(0.6649798, 0.5124417, 7.70092e-07, 0.41960785)
+
 [node name="Players" type="Node2D" parent="Entities" unique_id=762112187]
+
+[node name="PlayerGoalAnim" type="AnimationPlayer" parent="Entities/Players" unique_id=642353521]
+libraries/ = SubResource("AnimationLibrary_gr7vw")
 
 [node name="Spawners" type="Node2D" parent="." unique_id=263630955]
 
 [node name="PlayerSpawnerGroup" type="Node2D" parent="Spawners" unique_id=233567998]
 
 [node name="PlayerSpawner" type="Marker2D" parent="Spawners/PlayerSpawnerGroup" unique_id=740659427]
-position = Vector2(24, -160)
+position = Vector2(16, -160)
 
 [node name="Player_FixedMoveAndFixedJump" parent="Spawners/PlayerSpawnerGroup/PlayerSpawner" unique_id=508712885 instance=ExtResource("2_38rtr")]
 
@@ -52,7 +125,7 @@ limit_top = -216
 limit_right = 1488
 limit_bottom = 0
 script = ExtResource("4_rgv3i")
-LineColor = Color(0.2529052, 0.5622926, 1, 0.8509804)
+LineColor = Color(0.25030932, 0.56108564, 1, 0.25)
 
 [node name="PlayerStartSpot" type="Marker2D" parent="Spawners/PlayerSpawnerGroup" unique_id=1575219816]
 position = Vector2(16, -160)
@@ -87,9 +160,8 @@ offset_left = 132.0
 offset_right = 188.0
 offset_bottom = 216.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.5)
+color = Color(0, 0, 0, 0.25)
 
 [node name="VertRuler" type="Sprite2D" parent="SceneDebug/RulerRect" unique_id=1006698304]
-modulate = Color(1, 1, 1, 0.75000006)
 position = Vector2(28, 108)
 texture = ExtResource("2_v2pvs")

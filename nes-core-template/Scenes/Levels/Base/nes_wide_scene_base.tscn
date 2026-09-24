@@ -49,9 +49,8 @@ offset_left = 132.0
 offset_right = 188.0
 offset_bottom = 216.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.5)
+color = Color(0, 0, 0, 0.25)
 
 [node name="VertRuler" type="Sprite2D" parent="SceneDebug/RulerRect" unique_id=1006698304]
-modulate = Color(1, 1, 1, 0.75000006)
 position = Vector2(28, 108)
 texture = ExtResource("3_mr4h6")
