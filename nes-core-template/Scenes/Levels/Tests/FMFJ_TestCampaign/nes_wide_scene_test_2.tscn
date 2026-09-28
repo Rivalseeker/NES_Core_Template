@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://c83pfn1lc84jx" path="res://Assets/Art/TileSets/Tests/rocky_tan_tile_set.tres" id="2_n3fwf"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="2_v2pvs"]
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="3_h28e7"]
+[ext_resource type="PackedScene" uid="uid://c3068mllbcmgg" path="res://Scenes/Gizmos/checkpoint_flag.tscn" id="4_qm4ew"]
 [ext_resource type="Script" uid="uid://cfen1dos04ob7" path="res://Scripts/Utils/Tests/ExampleCamera.cs" id="4_rgv3i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_us00r"]
@@ -12,6 +13,7 @@ size = Vector2(1, 1)
 
 [sub_resource type="Animation" id="Animation_rgv3i"]
 resource_name = "Goal"
+length = 1.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -32,7 +34,7 @@ tracks/1/path = NodePath("../..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1),
+"times": PackedFloat32Array(1.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -65,8 +67,8 @@ _data = {
 script = ExtResource("1_n3fwf")
 goalArea = NodePath("Entities/Gizmos/GoalDoor/GoalArea")
 goalAnim = NodePath("Entities/Players/PlayerGoalAnim")
-nextLevelPath = "uid://btav01b8e5hm1"
-sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
+nextLevelPath = "uid://khstjf3vc6th"
+sceneClearColor = Color(0.38039216, 0.827451, 0.8901961, 1)
 playerScene = ExtResource("2_38rtr")
 playerSpawnerGroup = NodePath("Spawners/PlayerSpawnerGroup")
 sceneCamera = NodePath("SceneCamera")
@@ -102,6 +104,14 @@ monitorable = false
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_us00r")
 debug_color = Color(0.6649798, 0.5124417, 7.70092e-07, 0.41960785)
+
+[node name="Checkpoints" type="Node2D" parent="Entities/Gizmos" unique_id=1742420919]
+
+[node name="CheckpointFlag" parent="Entities/Gizmos/Checkpoints" unique_id=1495537708 instance=ExtResource("4_qm4ew")]
+position = Vector2(360, -32)
+
+[node name="FlagLaser" parent="Entities/Gizmos/Checkpoints/CheckpointFlag" index="1" unique_id=1380009732]
+polygon = PackedVector2Array(0, 0, 0, -184, 0.9199829, -184, 0.9199829, 0)
 
 [node name="Players" type="Node2D" parent="Entities" unique_id=762112187]
 
@@ -165,3 +175,5 @@ color = Color(0, 0, 0, 0.25)
 [node name="VertRuler" type="Sprite2D" parent="SceneDebug/RulerRect" unique_id=1006698304]
 position = Vector2(28, 108)
 texture = ExtResource("2_v2pvs")
+
+[editable path="Entities/Gizmos/Checkpoints/CheckpointFlag"]
