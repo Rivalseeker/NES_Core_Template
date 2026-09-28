@@ -203,19 +203,19 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="UpInput" type="HBoxContainer" parent="KeyboardList" unique_id=1430126240]
+[node name="UpAction" type="HBoxContainer" parent="KeyboardList" unique_id=1430126240]
 layout_mode = 2
 
-[node name="UpLabel" parent="KeyboardList/UpInput" unique_id=1692661727 instance=ExtResource("5_hb8gb")]
+[node name="UpLabel" parent="KeyboardList/UpAction" unique_id=1692661727 instance=ExtResource("5_hb8gb")]
 layout_mode = 2
 text = "JUMP"
 horizontal_alignment = 0
 
-[node name="Spacer" type="Control" parent="KeyboardList/UpInput" unique_id=308359087]
+[node name="Spacer" type="Control" parent="KeyboardList/UpAction" unique_id=308359087]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 
-[node name="UpInput" parent="KeyboardList/UpInput" unique_id=1492683829 instance=ExtResource("5_hb8gb")]
+[node name="UpInput" parent="KeyboardList/UpAction" unique_id=1492683829 instance=ExtResource("5_hb8gb")]
 layout_mode = 2
 text = "SPACE"
 
@@ -252,6 +252,74 @@ theme_override_fonts/font = ExtResource("1_k6sep")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/focus = SubResource("StyleBoxEmpty_86bku")
 text = "EXIT KEYBOARD SETTINGS"
+flat = true
+alignment = 0
+
+[node name="ControllerList" type="VBoxContainer" parent="." unique_id=603539215]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UpInput" type="HBoxContainer" parent="ControllerList" unique_id=463491187]
+layout_mode = 2
+
+[node name="UpLabel" parent="ControllerList/UpInput" unique_id=1246987544 instance=ExtResource("5_hb8gb")]
+layout_mode = 2
+text = "JUMP"
+horizontal_alignment = 0
+
+[node name="Spacer" type="Control" parent="ControllerList/UpInput" unique_id=2064201663]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="UpInput" parent="ControllerList/UpInput" unique_id=1578934449 instance=ExtResource("5_hb8gb")]
+layout_mode = 2
+text = "SPACE"
+
+[node name="Spacer" type="Control" parent="ControllerList" unique_id=1216697279]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="ControllerDefaultsButton" type="Button" parent="ControllerList" unique_id=1446081727]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, 0)
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_k6sep")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_86bku")
+text = "RESET CONTROLLER DEFAULTS"
+flat = true
+alignment = 0
+
+[node name="ControllerBackButton" type="Button" parent="ControllerList" unique_id=1208649245]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, 0)
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_k6sep")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_86bku")
+text = "EXIT CONTROLLER SETTINGS"
 flat = true
 alignment = 0
 
