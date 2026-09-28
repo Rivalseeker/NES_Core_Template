@@ -52,6 +52,8 @@ public partial class CheckpointFlag : Area2D
 
             // // Shout out to all other flags in the level to deactivate themselves
             // CheckpointTriggered?.Invoke(CheckpointId);
+
+            GD.Print("Checkpoint!");
         }
     }
 }

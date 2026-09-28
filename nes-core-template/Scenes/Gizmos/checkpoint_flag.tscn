@@ -88,8 +88,12 @@ _data = {
 &"RESET": SubResource("Animation_ohby6")
 }
 
-[node name="CheckpointFlag" type="Area2D" unique_id=1495537708]
+[node name="CheckpointFlag" type="Area2D" unique_id=1495537708 node_paths=PackedStringArray("animPlayer")]
+collision_layer = 8
+collision_mask = 2
+monitorable = false
 script = ExtResource("1_eh7ty")
+animPlayer = NodePath("FlagAnim")
 
 [node name="FlagSprite" type="Sprite2D" parent="." unique_id=1425384861]
 texture = ExtResource("1_q1sfl")
