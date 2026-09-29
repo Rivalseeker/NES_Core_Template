@@ -188,7 +188,6 @@ flat = true
 alignment = 0
 
 [node name="AudioList" type="VBoxContainer" parent="." unique_id=934568164]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -227,6 +226,8 @@ ValueLabelMinSize = Vector2(64, 0)
 
 [node name="AudioBackButton" type="Button" parent="AudioList" unique_id=2052335952]
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, 0)
 mouse_filter = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
@@ -240,6 +241,7 @@ flat = true
 alignment = 0
 
 [node name="VideoList" type="VBoxContainer" parent="." unique_id=212416362]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -293,6 +295,8 @@ ValueLabelMinSize = Vector2(112, 0)
 
 [node name="VideoBackButton" type="Button" parent="VideoList" unique_id=84407369]
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, 0)
 mouse_filter = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
