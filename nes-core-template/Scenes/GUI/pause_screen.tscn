@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bdmefgffmjftp"]
+
+[ext_resource type="Script" uid="uid://dlpyc3lbjqafy" path="res://Scripts/GUI/PauseScreen.cs" id="1_1ragi"]
+[ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="1_rbka0"]
+
+[node name="PauseScreen" type="ColorRect" unique_id=1917588790]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.25)
+script = ExtResource("1_1ragi")
+
+[node name="NES_Label" parent="." unique_id=1692661727 instance=ExtResource("1_rbka0")]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PAUSED"

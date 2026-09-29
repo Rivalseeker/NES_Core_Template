@@ -30,6 +30,7 @@ _loadingScreenPrefab = ExtResource("2_a3xfu")
 [node name="Dummy2D" parent="World2D" unique_id=1405509794 instance=ExtResource("1_588m2")]
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=1723310024]
+process_mode = 3
 layer = 30
 
 [node name="SplashScreen" parent="GUI" unique_id=397755261 instance=ExtResource("3_6bq7i")]

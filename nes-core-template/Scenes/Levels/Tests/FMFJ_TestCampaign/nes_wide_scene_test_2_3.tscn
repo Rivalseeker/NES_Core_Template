@@ -63,8 +63,10 @@ _data = {
 &"RESET": SubResource("Animation_kyfsr")
 }
 
-[node name="NES_WideSceneTest2-3" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("goalArea", "goalAnim", "playerSpawnerGroup", "sceneCamera", "sceneCameraBorder", "debugRuler")]
+[node name="NES_WideSceneTest2-3" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("checkpointContainer", "playerSpawner", "goalArea", "goalAnim", "playerSpawnerGroup", "sceneCamera", "sceneCameraBorder", "debugRuler")]
 script = ExtResource("1_lkvlo")
+checkpointContainer = NodePath("Entities/Gizmos/Checkpoints")
+playerSpawner = NodePath("Spawners/PlayerSpawnerGroup/PlayerSpawner")
 goalArea = NodePath("Entities/Gizmos/GoalDoor/GoalArea")
 goalAnim = NodePath("Entities/Players/PlayerGoalAnim")
 playerScene = ExtResource("2_gl7se")

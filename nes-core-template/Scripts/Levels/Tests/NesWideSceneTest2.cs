@@ -4,9 +4,19 @@ using Godot.Collections;
 
 public partial class NesWideSceneTest2 : NesWideSceneBase
 {
+    [ExportCategory("Node References")]
+    [Export] public Node checkpointContainer;
+    [Export] public Marker2D playerSpawner;
     [Export] private Area2D goalArea;
     [Export] private AnimationPlayer goalAnim;
+
     [Export(PropertyHint.File, "*.tscn")] private string nextLevelPath;
+
+
+    public Vector2 currentSpawnPosition;
+
+
+
 
     public override void _Ready()
     {
@@ -33,6 +43,31 @@ public partial class NesWideSceneTest2 : NesWideSceneBase
         if (goalArea != null)
         {
             goalArea.BodyEntered += OnGoalAreaBodyEntered;
+        }
+
+        // Memorize this level so the Pause Screen knows what to reload
+        SessionState.CurrentLevelPath = this.SceneFilePath;
+
+        currentSpawnPosition = playerSpawner != null ? playerSpawner.Position : Vector2.Zero;
+
+        if (checkpointContainer != null)
+        {
+            foreach (Node child in checkpointContainer.GetChildren())
+            {
+                if (child is CheckpointFlag flag)
+                {
+                    // If this flag matches our saved session memory, make it Active and spawn here!
+                    if (SessionState.ActiveCheckpointId != 0 && flag.CheckpointId == SessionState.ActiveCheckpointId)
+                    {
+                        flag.InitializeState(true);
+                        currentSpawnPosition = flag.Position;
+                    }
+                    else
+                    {
+                        flag.InitializeState(false);
+                    }
+                }
+            }
         }
 
         SpawnPlayer();
