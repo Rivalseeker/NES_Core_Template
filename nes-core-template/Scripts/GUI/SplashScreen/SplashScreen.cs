@@ -7,7 +7,7 @@ public partial class SplashScreen : Control
     
     // Exported color property for easy configuration in the inspector
     // Defaults to black, highly typical for classic boot screens
-    [Export] private Color _bootClearColor = new Color(0, 0, 0, 1); 
+    [Export] private Color _bootClearColor = new Color(0, 0, 0, 1);
 
     public override void _Ready()
     {

@@ -51,7 +51,7 @@ _data = {
 &"RESET": SubResource("Animation_2vrav")
 }
 
-[node name="OptionsMenu" type="Control" unique_id=568557062 node_paths=PackedStringArray("_optionsList", "_audioList", "_videoList", "_keyboardButton", "_controllerButton", "_audioButton", "_videoButton", "_backButton", "_masterVolSlider", "_musicVolSlider", "_sfxVolSlider", "_speakerSelector", "_audioBackButton", "_windowSizeSelector", "_fullscreenSelector", "_vsyncSelector", "_flickerSelector", "_pixelMovementSelector", "_crtSelector", "_videoBackButton", "_confirmPrompt", "_promptYesButton", "_promptNoButton", "_promptCancelButton", "_cursorIcon", "_cursorAnim", "_promptCursor", "_promptCursorAnim")]
+[node name="OptionsMenu" type="Control" unique_id=568557062 node_paths=PackedStringArray("_optionsList", "_keyboardList", "_audioList", "_videoList", "_keyboardButton", "_controllerButton", "_audioButton", "_videoButton", "_backButton", "_upAction", "_keyboardDefaultsButton", "_keyboardBackButton", "_masterVolSlider", "_musicVolSlider", "_sfxVolSlider", "_speakerSelector", "_audioBackButton", "_windowSizeSelector", "_fullscreenSelector", "_vsyncSelector", "_flickerSelector", "_pixelMovementSelector", "_crtSelector", "_videoBackButton", "_confirmPrompt", "_promptYesButton", "_promptNoButton", "_promptCancelButton", "_cursorIcon", "_cursorAnim", "_promptCursor", "_promptCursorAnim")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,6 +61,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_86bku")
 _optionsList = NodePath("OptionsList")
+_keyboardList = NodePath("KeyboardList")
 _audioList = NodePath("AudioList")
 _videoList = NodePath("VideoList")
 _keyboardButton = NodePath("OptionsList/KeyboardButton")
@@ -68,6 +69,9 @@ _controllerButton = NodePath("OptionsList/ControllerButton")
 _audioButton = NodePath("OptionsList/AudioButton")
 _videoButton = NodePath("OptionsList/VideoButton")
 _backButton = NodePath("OptionsList/BackButton")
+_upAction = NodePath("KeyboardList/UpAction")
+_keyboardDefaultsButton = NodePath("KeyboardList/KeyboardDefaultsButton")
+_keyboardBackButton = NodePath("KeyboardList/KeyboardBackButton")
 _masterVolSlider = NodePath("AudioList/MasterVolSlider")
 _musicVolSlider = NodePath("AudioList/MusicVolSlider")
 _sfxVolSlider = NodePath("AudioList/SfxVolSlider")

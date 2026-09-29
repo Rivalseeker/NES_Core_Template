@@ -113,6 +113,10 @@ position = Vector2(360, -32)
 [node name="FlagLaser" parent="Entities/Gizmos/Checkpoints/CheckpointFlag" index="1" unique_id=1380009732]
 polygon = PackedVector2Array(0, 0, 0, -184, 0.9199829, -184, 0.9199829, 0)
 
+[node name="CheckpointFlag2" parent="Entities/Gizmos/Checkpoints" unique_id=1110962635 instance=ExtResource("4_qm4ew")]
+position = Vector2(848, -16)
+CheckpointId = 2
+
 [node name="Players" type="Node2D" parent="Entities" unique_id=762112187]
 
 [node name="PlayerGoalAnim" type="AnimationPlayer" parent="Entities/Players" unique_id=642353521]

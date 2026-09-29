@@ -3,7 +3,7 @@ using System;
 
 public partial class OptionsMenu : Control
 {
-    private enum MenuState { Main, Audio, Video }
+    private enum MenuState { Main, Keyboard, Audio, Video }
     private MenuState _activeSubMenu = MenuState.Main;
 
     // ==========================================
@@ -11,6 +11,7 @@ public partial class OptionsMenu : Control
     // ==========================================
     [ExportCategory("Menu Containers")]
     [Export] private VBoxContainer _optionsList;
+    [Export] private VBoxContainer _keyboardList;
     [Export] private VBoxContainer _audioList;
     [Export] private VBoxContainer _videoList;
 
@@ -20,6 +21,11 @@ public partial class OptionsMenu : Control
     [Export] private Button _audioButton;
     [Export] private Button _videoButton;
     [Export] private Button _backButton;
+
+    [ExportCategory("Keyboard Nodes")]
+    [Export] private Control _upAction;
+    [Export] private Button _keyboardDefaultsButton;
+    [Export] private Button _keyboardBackButton;
 
     [ExportCategory("Audio Nodes")]
     [Export] private RetroSlider _masterVolSlider;
@@ -57,16 +63,11 @@ public partial class OptionsMenu : Control
     [Export] private Vector2 _promptCursorOffset = new Vector2(-32, 0);
 
     // ==========================================
-    // NODE REFERENCES
-    // ==========================================
-    // [Export] private CanvasLayer crtFilter;
-
-    // ==========================================
     // VIDEO SETTINGS STATE
     // ==========================================
     private readonly Vector2I _baseResolution = new Vector2I(384, 216);
     private int _maxWindowScale;
-    private int _previousWindowScaleIndex; // NEW: Remembers the size before going fullscreen
+    private int _previousWindowScaleIndex;
 
     // ==========================================
     // INITIALIZATION
@@ -75,11 +76,19 @@ public partial class OptionsMenu : Control
     {
         GenerateResolutionOptions();
 
+        // Ensure HBoxContainer can participate in UI Focus
+        if (_upAction != null)
+        {
+            _upAction.FocusMode = FocusModeEnum.All;
+        }
+
         // 1. Wire Button Presses
+        _keyboardButton.Pressed += () => OpenSubMenu(MenuState.Keyboard);
         _audioButton.Pressed += () => OpenSubMenu(MenuState.Audio);
         _videoButton.Pressed += () => OpenSubMenu(MenuState.Video);
         _backButton.Pressed += CloseOptionsOverlay;
 
+        _keyboardBackButton.Pressed += AttemptCloseSubMenu;
         _audioBackButton.Pressed += AttemptCloseSubMenu;
         _videoBackButton.Pressed += AttemptCloseSubMenu;
 
@@ -94,14 +103,19 @@ public partial class OptionsMenu : Control
         _videoButton.FocusEntered += () => MoveCursorTo(_videoButton);
         _backButton.FocusEntered += () => MoveCursorTo(_backButton);
 
-        // 3. Wire Cursor Tracking (Audio List)
+        // 3. Wire Cursor Tracking (Keyboard List)
+        if (_upAction != null) _upAction.FocusEntered += () => MoveCursorTo(_upAction);
+        if (_keyboardDefaultsButton != null) _keyboardDefaultsButton.FocusEntered += () => MoveCursorTo(_keyboardDefaultsButton);
+        if (_keyboardBackButton != null) _keyboardBackButton.FocusEntered += () => MoveCursorTo(_keyboardBackButton);
+
+        // 4. Wire Cursor Tracking (Audio List)
         _masterVolSlider.FocusEntered += () => MoveCursorTo(_masterVolSlider);
         _musicVolSlider.FocusEntered += () => MoveCursorTo(_musicVolSlider);
         _sfxVolSlider.FocusEntered += () => MoveCursorTo(_sfxVolSlider);
         _speakerSelector.FocusEntered += () => MoveCursorTo(_speakerSelector);
         _audioBackButton.FocusEntered += () => MoveCursorTo(_audioBackButton);
 
-        // 4. Wire Cursor Tracking (Video List)
+        // 5. Wire Cursor Tracking (Video List)
         _windowSizeSelector.FocusEntered += () => MoveCursorTo(_windowSizeSelector);
         _fullscreenSelector.FocusEntered += () => MoveCursorTo(_fullscreenSelector);
         _vsyncSelector.FocusEntered += () => MoveCursorTo(_vsyncSelector);
@@ -110,24 +124,35 @@ public partial class OptionsMenu : Control
         _crtSelector.FocusEntered += () => MoveCursorTo(_crtSelector);
         _videoBackButton.FocusEntered += () => MoveCursorTo(_videoBackButton);
 
-        // 5. Wire Cursor Tracking (Prompt)
+        // 6. Wire Cursor Tracking (Prompt)
         _promptYesButton.FocusEntered += () => MovePromptCursorTo(_promptYesButton);
         _promptNoButton.FocusEntered += () => MovePromptCursorTo(_promptNoButton);
         _promptCancelButton.FocusEntered += () => MovePromptCursorTo(_promptCancelButton);
 
-        // 6. Live Video Event Listeners
+        // 7. Live Video Event Listeners
         _windowSizeSelector.OnValueChanged += OnWindowSizeChanged;
         _fullscreenSelector.OnValueChanged += OnFullscreenChanged;
         _vsyncSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
-
-        // THE FIX: Make sure this line exists so the menu talks to the manager in real-time!
         _flickerSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
         _pixelMovementSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
         _crtSelector.OnValueChanged += (index) => ApplyVideoSettingsToServer();
 
-        // 7. Focus Looping (Wrap-Around)
+        // 8. Focus Looping (Wrap-Around)
         _keyboardButton.FocusNeighborTop = _backButton.GetPath();
         _backButton.FocusNeighborBottom = _keyboardButton.GetPath();
+
+        // Keyboard List Focus Neighbor Loop: UpAction <> KeyboardDefaultsButton <> KeyboardBackButton <> UpAction
+        if (_upAction != null && _keyboardDefaultsButton != null && _keyboardBackButton != null)
+        {
+            _upAction.FocusNeighborTop = _keyboardBackButton.GetPath();
+            _upAction.FocusNeighborBottom = _keyboardDefaultsButton.GetPath();
+
+            _keyboardDefaultsButton.FocusNeighborTop = _upAction.GetPath();
+            _keyboardDefaultsButton.FocusNeighborBottom = _keyboardBackButton.GetPath();
+
+            _keyboardBackButton.FocusNeighborTop = _keyboardDefaultsButton.GetPath();
+            _keyboardBackButton.FocusNeighborBottom = _upAction.GetPath();
+        }
 
         _masterVolSlider.FocusNeighborTop = _audioBackButton.GetPath();
         _audioBackButton.FocusNeighborBottom = _masterVolSlider.GetPath();
@@ -151,6 +176,7 @@ public partial class OptionsMenu : Control
         _promptCancelButton.FocusNeighborBottom = _promptCancelButton.GetPath();
 
         // Initial State
+        _keyboardList.Hide();
         _audioList.Hide();
         _videoList.Hide();
         _confirmPrompt.Hide();
@@ -177,7 +203,6 @@ public partial class OptionsMenu : Control
     // ==========================================
     private void GenerateResolutionOptions()
     {
-        // Find the absolute maximum integer scale that fits on the current monitor
         Vector2I screenSize = DisplayServer.ScreenGetSize();
         int maxScaleX = screenSize.X / _baseResolution.X;
         int maxScaleY = screenSize.Y / _baseResolution.Y;
@@ -226,7 +251,12 @@ public partial class OptionsMenu : Control
         _activeSubMenu = menu;
         _optionsList.Hide();
 
-        if (menu == MenuState.Audio)
+        if (menu == MenuState.Keyboard)
+        {
+            _keyboardList.Show();
+            _upAction.CallDeferred(Control.MethodName.GrabFocus);
+        }
+        else if (menu == MenuState.Audio)
         {
             LoadSavedAudioToUI();
             _audioList.Show();
@@ -242,7 +272,11 @@ public partial class OptionsMenu : Control
 
     private void AttemptCloseSubMenu()
     {
-        bool hasChanged = _activeSubMenu == MenuState.Audio ? HasAudioChanged() : HasVideoChanged();
+        bool hasChanged = false;
+
+        if (_activeSubMenu == MenuState.Audio) hasChanged = HasAudioChanged();
+        else if (_activeSubMenu == MenuState.Video) hasChanged = HasVideoChanged();
+        // Add keyboard key binding change check here in the future if applicable
 
         if (hasChanged)
         {
@@ -263,11 +297,13 @@ public partial class OptionsMenu : Control
         _cursorIcon.Show();
         _confirmPrompt.Hide();
         
+        _keyboardList.Hide();
         _audioList.Hide();
         _videoList.Hide();
         _optionsList.Show();
 
-        if (_activeSubMenu == MenuState.Audio) _audioButton.CallDeferred(Control.MethodName.GrabFocus);
+        if (_activeSubMenu == MenuState.Keyboard) _keyboardButton.CallDeferred(Control.MethodName.GrabFocus);
+        else if (_activeSubMenu == MenuState.Audio) _audioButton.CallDeferred(Control.MethodName.GrabFocus);
         else if (_activeSubMenu == MenuState.Video) _videoButton.CallDeferred(Control.MethodName.GrabFocus);
 
         _activeSubMenu = MenuState.Main;
@@ -321,12 +357,11 @@ public partial class OptionsMenu : Control
         GameData d = SaveManager.Instance.CurrentGameData;
         
         int scaleIndex = Mathf.Clamp(d.WindowScaleMultiplier - 1, 0, _maxWindowScale - 1);
-        _previousWindowScaleIndex = scaleIndex; // Initialize the tracker
+        _previousWindowScaleIndex = scaleIndex;
         
         _windowSizeSelector.SetValueNoNotify(scaleIndex);
         _fullscreenSelector.SetValueNoNotify(d.Fullscreen ? 1 : 0);
         _vsyncSelector.SetValueNoNotify(d.VSync ? 1 : 0);
-        // _flickerSelector.SetValueNoNotify(d.SpriteFlicker ? 1 : 0);
         _flickerSelector.SetValueNoNotify(d.SpriteFlickerMode);
         _pixelMovementSelector.SetValueNoNotify(d.PixelMovement ? 1 : 0);
         _crtSelector.SetValueNoNotify(d.CRT_Filter ? 1 : 0);
@@ -339,12 +374,10 @@ public partial class OptionsMenu : Control
         int targetScale = _windowSizeSelector.CurrentIndex + 1;
         bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
-        // bool isFlicker = _flickerSelector.CurrentIndex == 1;
         int currentFlicker = _flickerSelector.CurrentIndex;
         bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
         bool isCrt = _crtSelector.CurrentIndex == 1;
 
-        // return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || isFlicker != d.SpriteFlicker || isPixelMovement != d.PixelMovement;
         return targetScale != d.WindowScaleMultiplier || isFullscreen != d.Fullscreen || isVsync != d.VSync || currentFlicker != d.SpriteFlickerMode || isPixelMovement != d.PixelMovement || isCrt != d.CRT_Filter;
     }
 
@@ -356,77 +389,26 @@ public partial class OptionsMenu : Control
         d.Fullscreen = _fullscreenSelector.CurrentIndex == 1;
         d.VSync = _vsyncSelector.CurrentIndex == 1;
 
-        // 1. Assign to the data model
-        // d.SpriteFlicker = _flickerSelector.CurrentIndex == 1;
         d.SpriteFlickerMode = _flickerSelector.CurrentIndex;
         d.PixelMovement = _pixelMovementSelector.CurrentIndex == 1;
         d.CRT_Filter = _crtSelector.CurrentIndex == 1;
         
-        // 2. Write to disk
         SaveManager.Instance.SaveGameData();
 
-        // 3. THE FIX: Push the saved state directly to the live Runtime memory
         if (NESSpriteManager.Instance != null)
         {
-            // NESSpriteManager.Instance.FlickerEnabled = CurrentGameData.SpriteFlicker;
             NESSpriteManager.Instance.CurrentFlickerMode = (NESSpriteManager.FlickerMode)_flickerSelector.CurrentIndex;
         }
     }
 
-    // private void ApplyLiveVideoSettings()
-    // {
-    //     bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
-    //     bool isVsync = _vsyncSelector.CurrentIndex == 1;
-    //     int scale = _windowSizeSelector.CurrentIndex + 1;
-
-    //     // --- Interdependence Logic ---
-    //     // If they pushed the resolution up to the max monitor limit, toggle fullscreen ON
-    //     if (scale == _maxWindowScale && !isFullscreen)
-    //     {
-    //         _fullscreenSelector.SetValueNoNotify(1);
-    //         isFullscreen = true;
-    //     }
-    //     // If they turned Fullscreen ON, force the window size UI to show the Max resolution
-    //     else if (isFullscreen && scale < _maxWindowScale)
-    //     {
-    //         _windowSizeSelector.SetValueNoNotify(_maxWindowScale - 1);
-    //         scale = _maxWindowScale;
-    //     }
-
-    //     // --- Apply to DisplayServer ---
-    //     DisplayServer.WindowSetVsyncMode(isVsync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
-
-    //     if (isFullscreen)
-    //     {
-    //         DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
-    //     }
-    //     else
-    //     {
-    //         DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-            
-    //         // Calculate and set the exact pixel size
-    //         Vector2I newSize = new Vector2I(_baseResolution.X * scale, _baseResolution.Y * scale);
-    //         DisplayServer.WindowSetSize(newSize);
-
-    //         // Re-center the window on the screen so it doesn't get stuck in the top left
-    //         Vector2I screenPos = DisplayServer.ScreenGetPosition();
-    //         Vector2I screenSize = DisplayServer.ScreenGetSize();
-    //         Vector2I centerPos = screenPos + (screenSize / 2) - (newSize / 2);
-    //         DisplayServer.WindowSetPosition(centerPos);
-    //     }
-    // }
-
-    // Triggered ONLY when the user clicks left/right on the Window Size selector
     private void OnWindowSizeChanged(int newIndex)
     {
-        // If the user manually picked the absolute max monitor size, auto-trigger Fullscreen
         if (newIndex == _maxWindowScale - 1)
         {
             _fullscreenSelector.SetValueNoNotify(1);
         }
         else
         {
-            // If they picked a lower size, ensure Fullscreen is OFF and remember this choice
             _fullscreenSelector.SetValueNoNotify(0);
             _previousWindowScaleIndex = newIndex;
         }
@@ -434,14 +416,12 @@ public partial class OptionsMenu : Control
         ApplyVideoSettingsToServer();
     }
 
-    // Triggered ONLY when the user clicks left/right on the Fullscreen selector
     private void OnFullscreenChanged(int newIndex)
     {
         bool isFullscreen = newIndex == 1;
 
         if (isFullscreen)
         {
-            // Remember the current scale before forcing max, so we can return to it later
             if (_windowSizeSelector.CurrentIndex != _maxWindowScale - 1)
             {
                 _previousWindowScaleIndex = _windowSizeSelector.CurrentIndex;
@@ -450,10 +430,8 @@ public partial class OptionsMenu : Control
         }
         else
         {
-            // Exiting fullscreen: Restore the previous windowed scale
             int restoreIndex = _previousWindowScaleIndex;
             
-            // Safety fallback: if the previous size was somehow max, bump it down by 1 so it isn't stuck
             if (restoreIndex == _maxWindowScale - 1) 
             {
                 restoreIndex = Mathf.Max(0, _maxWindowScale - 2); 
@@ -465,20 +443,16 @@ public partial class OptionsMenu : Control
         ApplyVideoSettingsToServer();
     }
 
-    // The "Dumb" applier: It simply looks at the UI and executes it on the OS Window.
     private void ApplyVideoSettingsToServer()
     {
         bool isFullscreen = _fullscreenSelector.CurrentIndex == 1;
         bool isVsync = _vsyncSelector.CurrentIndex == 1;
         int scale = _windowSizeSelector.CurrentIndex + 1;
-        // bool isFlicker = _flickerSelector.CurrentIndex == 1;
         bool isPixelMovement = _pixelMovementSelector.CurrentIndex == 1;
         bool isCrt = _crtSelector.CurrentIndex == 1;
 
-        // Live pass down to the Autoload Simulation Manager
         if (NESSpriteManager.Instance != null)
         {
-            // NESSpriteManager.Instance.FlickerEnabled = isFlicker;
             NESSpriteManager.Instance.CurrentFlickerMode = (NESSpriteManager.FlickerMode)_flickerSelector.CurrentIndex;
         }
 
@@ -488,7 +462,7 @@ public partial class OptionsMenu : Control
         if (mainWindow.IsEmbedded()) return;
 
         Viewport viewport = GetViewport();
-        viewport.Snap2DTransformsToPixel = isPixelMovement ? viewport.Snap2DTransformsToPixel = true : viewport.Snap2DTransformsToPixel = false;
+        viewport.Snap2DTransformsToPixel = isPixelMovement;
 
         if (isFullscreen)
         {
@@ -508,7 +482,6 @@ public partial class OptionsMenu : Control
             mainWindow.Position = centerPos;
         }
 
-        // ADDED: Safely fetch the CRTLayer from the scene tree and apply visibility
         CanvasLayer crtFilter = GetTree().Root.FindChild("CRT_Layer", true, false) as CanvasLayer;
         
         if (crtFilter != null)
@@ -523,14 +496,11 @@ public partial class OptionsMenu : Control
 
     private void OnWindowResized()
     {
-        // When the window resizes, the UI takes a split second to calculate the new centered layout.
-        // We use CallDeferred to wait until that math is done before snapping the cursor.
         CallDeferred(MethodName.UpdateCursorPosition);
     }
 
     private void UpdateCursorPosition()
     {
-        // Find whichever control the player is currently highlighting
         Control focusedNode = GetViewport().GuiGetFocusOwner();
         
         if (focusedNode != null)
@@ -561,12 +531,11 @@ public partial class OptionsMenu : Control
         if (_activeSubMenu == MenuState.Audio)
         {
             LoadSavedAudioToUI();
-            // Sliders automatically re-apply live volume in their property setter
         }
         else if (_activeSubMenu == MenuState.Video)
         {
             LoadSavedVideoToUI();
-            ApplyVideoSettingsToServer(); // Revert screen back to saved state
+            ApplyVideoSettingsToServer();
         }
         ForceCloseSubMenu();
     }
@@ -577,10 +546,10 @@ public partial class OptionsMenu : Control
         _confirmPrompt.Hide();
         _cursorIcon.Show();
 
-        if (_activeSubMenu == MenuState.Audio) _audioBackButton.CallDeferred(Control.MethodName.GrabFocus);
+        if (_activeSubMenu == MenuState.Keyboard) _keyboardBackButton.CallDeferred(Control.MethodName.GrabFocus);
+        else if (_activeSubMenu == MenuState.Audio) _audioBackButton.CallDeferred(Control.MethodName.GrabFocus);
         else if (_activeSubMenu == MenuState.Video) _videoBackButton.CallDeferred(Control.MethodName.GrabFocus);
     }
 
-    private void OnKeyboardPressed() { GD.Print("Keyboard Settings Not Implemented"); }
     private void OnControllerPressed() { GD.Print("Controller Settings Not Implemented"); }
 }

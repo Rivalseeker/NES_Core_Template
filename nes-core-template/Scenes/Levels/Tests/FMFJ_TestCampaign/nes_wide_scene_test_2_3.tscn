@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bn0mexxxsnilw" path="res://Scenes/Characters/Players/Tests/player_fixed_move_and_fixed_jump.tscn" id="2_gl7se"]
 [ext_resource type="TileSet" uid="uid://c83pfn1lc84jx" path="res://Assets/Art/TileSets/Tests/rocky_tan_tile_set.tres" id="3_whp1e"]
 [ext_resource type="Script" uid="uid://cfen1dos04ob7" path="res://Scripts/Utils/Tests/ExampleCamera.cs" id="4_cl6yu"]
+[ext_resource type="PackedScene" uid="uid://c3068mllbcmgg" path="res://Scenes/Gizmos/checkpoint_flag.tscn" id="4_gl7se"]
 [ext_resource type="Texture2D" uid="uid://c1svy7ppyewtu" path="res://Assets/Art/canvas_border.png" id="5_58jvx"]
 [ext_resource type="Texture2D" uid="uid://djie0cbv1pwii" path="res://Assets/Art/MeasuringTools/VertRuler.png" id="6_n0s4f"]
 
@@ -102,6 +103,18 @@ position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_us00r")
 debug_color = Color(0.6649798, 0.5124417, 7.70092e-07, 0.41960785)
 
+[node name="Checkpoints" type="Node2D" parent="Entities/Gizmos" unique_id=1669918949]
+
+[node name="CheckpointFlag" parent="Entities/Gizmos/Checkpoints" unique_id=1495537708 instance=ExtResource("4_gl7se")]
+position = Vector2(360, -32)
+
+[node name="FlagLaser" parent="Entities/Gizmos/Checkpoints/CheckpointFlag" index="1" unique_id=1380009732]
+polygon = PackedVector2Array(0, 0, 0, -184, 0.9199829, -184, 0.9199829, 0)
+
+[node name="CheckpointFlag2" parent="Entities/Gizmos/Checkpoints" unique_id=1878384492 instance=ExtResource("4_gl7se")]
+position = Vector2(848, -16)
+CheckpointId = 2
+
 [node name="Players" type="Node2D" parent="Entities" unique_id=762112187]
 
 [node name="PlayerGoalAnim" type="AnimationPlayer" parent="Entities/Players" unique_id=642353521]
@@ -164,3 +177,5 @@ color = Color(0, 0, 0, 0.25)
 [node name="VertRuler" type="Sprite2D" parent="SceneDebug/RulerRect" unique_id=1006698304]
 position = Vector2(28, 108)
 texture = ExtResource("6_n0s4f")
+
+[editable path="Entities/Gizmos/Checkpoints/CheckpointFlag"]

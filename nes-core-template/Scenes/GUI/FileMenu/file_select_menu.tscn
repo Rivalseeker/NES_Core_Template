@@ -1,0 +1,228 @@
+[gd_scene format=3 uid="uid://c5vps4gvq58cy"]
+
+[ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="1_wvl7g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_af4jy"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.09985284, 0.09985284, 0.09985284, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[node name="FileSelectMenu" type="Control" unique_id=865965903]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FileSlot1" type="Panel" parent="." unique_id=735703157]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -76.0
+offset_right = -80.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_af4jy")
+
+[node name="FileLabel" parent="FileSlot1" unique_id=1692661727 instance=ExtResource("1_wvl7g")]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 17.0
+text = "FILE 1"
+
+[node name="New" type="Control" parent="FileSlot1" unique_id=1244554791]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewLabel" parent="FileSlot1/New" unique_id=827615223 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NEW"
+
+[node name="Saved" type="Control" parent="FileSlot1" unique_id=1514987943]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageLabel" parent="FileSlot1/Saved" unique_id=1689356952 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "STAGE 1"
+
+[node name="FileSlot2" type="Panel" parent="." unique_id=1760497918]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -76.0
+offset_right = 40.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_af4jy")
+
+[node name="FileLabel" parent="FileSlot2" unique_id=337132883 instance=ExtResource("1_wvl7g")]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 17.0
+text = "FILE 2"
+
+[node name="New" type="Control" parent="FileSlot2" unique_id=1320291804]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewLabel" parent="FileSlot2/New" unique_id=443265551 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NEW"
+
+[node name="Saved" type="Control" parent="FileSlot2" unique_id=2145921031]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageLabel" parent="FileSlot2/Saved" unique_id=501953290 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "STAGE 1"
+
+[node name="FileSlot3" type="Panel" parent="." unique_id=65709490]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -76.0
+offset_right = 160.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_af4jy")
+
+[node name="FileLabel" parent="FileSlot3" unique_id=1616267448 instance=ExtResource("1_wvl7g")]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 17.0
+text = "FILE 3"
+
+[node name="New" type="Control" parent="FileSlot3" unique_id=1732196382]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewLabel" parent="FileSlot3/New" unique_id=1752352906 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NEW"
+
+[node name="Saved" type="Control" parent="FileSlot3" unique_id=993639788]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageLabel" parent="FileSlot3/Saved" unique_id=841237428 instance=ExtResource("1_wvl7g")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "STAGE 1"

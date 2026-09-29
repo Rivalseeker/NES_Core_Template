@@ -6,7 +6,7 @@ public partial class CheckpointFlag : Area2D
     [Export] public int CheckpointId { get; set; } = 1;
     [Export] private AnimationPlayer animPlayer;
 
-    public static event Action<string> CheckpointTriggered;
+    // public static event Action<string> CheckpointTriggered;
 
     private bool _isActive = false;
 
