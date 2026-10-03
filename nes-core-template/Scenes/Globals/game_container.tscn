@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://jglmh7n81t0x" path="res://Scripts/Globals/GameContainer.cs" id="1_6bq7i"]
 [ext_resource type="PackedScene" uid="uid://376uxa5bi8n" path="res://Scenes/Dummies/dummy_2d.tscn" id="1_588m2"]
 [ext_resource type="PackedScene" uid="uid://dg4d6ujf37b61" path="res://Scenes/GUI/LoadingScreen/loading_screen_view.tscn" id="2_a3xfu"]
+[ext_resource type="PackedScene" uid="uid://bdmefgffmjftp" path="res://Scenes/GUI/pause_screen.tscn" id="3_003uw"]
 [ext_resource type="PackedScene" uid="uid://cedsls53ao7hd" path="res://Scenes/GUI/splash_screen.tscn" id="3_6bq7i"]
 [ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="5_a3xfu"]
 [ext_resource type="Script" uid="uid://m7b26l1abv5p" path="res://Scripts/Debug/GamePerformanceDebug.cs" id="5_xmrv8"]
@@ -24,13 +25,13 @@ _loadingScreenLayer = NodePath("LoadingScreen")
 _debugLayer = NodePath("GamePerformanceDebug")
 _crtFilterLayer = NodePath("CRT_Layer")
 _loadingScreenPrefab = ExtResource("2_a3xfu")
+_pauseScreenPrefab = ExtResource("3_003uw")
 
 [node name="World2D" type="Node2D" parent="." unique_id=1744169343]
 
 [node name="Dummy2D" parent="World2D" unique_id=1405509794 instance=ExtResource("1_588m2")]
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=1723310024]
-process_mode = 3
 layer = 30
 
 [node name="SplashScreen" parent="GUI" unique_id=397755261 instance=ExtResource("3_6bq7i")]
@@ -39,6 +40,7 @@ layer = 30
 layer = 50
 
 [node name="GamePerformanceDebug" type="CanvasLayer" parent="." unique_id=1633792615 node_paths=PackedStringArray("_debugTextLabel")]
+process_mode = 3
 layer = 100
 script = ExtResource("5_xmrv8")
 _debugTextLabel = NodePath("DebugPanel/MarginContainer/NES_Label")

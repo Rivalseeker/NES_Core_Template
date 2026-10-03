@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d20mcw3g0oy7d"]
+
+[ext_resource type="FontFile" uid="uid://bdcy0d6dekdpf" path="res://Assets/Art/Fonts/Super Mario Bros. NES.ttf" id="1_ij2bp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86bku"]
+
+[node name="NES_Button" type="Button" unique_id=1360770306]
+offset_right = 32.0
+offset_bottom = 17.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-4, 0)
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_ij2bp")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_86bku")
+text = "NES"
+flat = true
+alignment = 0

@@ -10,11 +10,12 @@ public partial class PauseScreen : ColorRect
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // if (@event.IsActionPressed("Pause")) // Or your dedicated "pause" action
-        // {
-        //     TogglePause();
-        //     GetViewport().SetInputAsHandled();
-        // }
+        // Ensure you have an action named "Pause" mapped in Project Settings -> Input Map
+        if (@event.IsActionPressed("Pause")) 
+        {
+            TogglePause();
+            GetViewport().SetInputAsHandled();
+        }
     }
 
     public void TogglePause()
@@ -28,5 +29,14 @@ public partial class PauseScreen : ColorRect
             // Optional: Grab focus for menu items if pause screen has buttons
             // GetNode<Button>("VBoxContainer/ResumeButton")?.GrabFocus();
         }
+    }
+    
+    // NEW: Example method for when a player clicks "Quit to Main Menu" from the pause screen
+    public void QuitToMainMenu(string mainMenuPath)
+    {
+        // CRITICAL: You must unpause the game before leaving, otherwise the Main Menu will be frozen!
+        GetTree().Paused = false; 
+        
+        SceneManager.Instance.LoadSceneAsync(mainMenuPath);
     }
 }

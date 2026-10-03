@@ -3,19 +3,32 @@ using Godot;
 public partial class TitleScreen : Control
 {
     [Export] private Color _sceneClearColor = new Color(0, 0, 0, 1);
-
-    // Updated to point to the Main Menu
     [Export(PropertyHint.File, "*.tscn")] private string _mainMenuPath;
+    
+    // NEW: Path to the debug menu scene
+    [Export(PropertyHint.File, "*.tscn")] private string _debugLevelSelectPath;
 
     public override void _Ready()
     {
-        // Apply the background color immediately when the splash screen loads
         ApplyClearColor(_sceneClearColor);
+        
+        // NEW: Re-enable input when returning from overlays
+        VisibilityChanged += () => {
+            if (Visible) SetProcessInput(true);
+        };
     }
 
     public override void _Input(InputEvent @event)
     {
-        // Check if the event is a key press or a joypad (controller) button press
+        // NEW: Check for Debug input first
+        if (@event.IsActionPressed("DebugLevelSelect") && !string.IsNullOrEmpty(_debugLevelSelectPath))
+        {
+            AcceptEvent();
+            SetProcessInput(false); // Stop title screen from reacting
+            SceneManager.Instance.OpenMenuOverlay(_debugLevelSelectPath);
+            return;
+        }
+
         bool isAnyKeyPressed = @event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo;
         bool isAnyButtonPressed = @event is InputEventJoypadButton joypadEvent && joypadEvent.Pressed;
 
@@ -31,14 +44,8 @@ public partial class TitleScreen : Control
         }
     }
 
-    // Function to change the active viewport's clear color
     private void ApplyClearColor(Color newColor)
     {
-        // This updates the actual rendering server immediately
         RenderingServer.SetDefaultClearColor(newColor);
-        
-        // Optional: If you need to read from ProjectSettings later in the session, 
-        // you can also update the setting itself, though it's not required for the visual change.
-        // ProjectSettings.SetSetting("rendering/environment/defaults/default_clear_color", newColor);
     }
 }

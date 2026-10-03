@@ -12,6 +12,8 @@ public partial class SceneManager : Node
 
     // The prefab of the loading screen UI
     public PackedScene LoadingScreenPrefab { get; set; }
+    // Property to hold the Pause Screen prefab
+    public PackedScene PauseScreenPrefab { get; set; }
 
     private Node _currentWorldScene;
     private Node _currentGuiScene;
@@ -102,6 +104,13 @@ public partial class SceneManager : Node
             
             // When loading a new game world, clear the old UI out
             ClearContainer(GuiContainer, ref _currentGuiScene); 
+
+            // Automatically inject gameplay UI (like the Pause Screen) into the GUI container
+            if (PauseScreenPrefab != null)
+            {
+                Node pauseInstance = PauseScreenPrefab.Instantiate();
+                GuiContainer.AddChild(pauseInstance);
+            }
         }
         else if (instance is Control)
         {

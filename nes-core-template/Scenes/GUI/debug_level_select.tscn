@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://de6ljy3ioiwrt"]
+
+[ext_resource type="Script" uid="uid://dtek2d3gq4ou" path="res://Scripts/GUI/DebugLevelSelect.cs" id="1_if4iu"]
+[ext_resource type="Script" uid="uid://d04nhf2fwftor" path="res://Scripts/Data/DebugLevelData.cs" id="2_ndotc"]
+[ext_resource type="PackedScene" uid="uid://d20mcw3g0oy7d" path="res://Scenes/GUI/Buttons/nes_button.tscn" id="3_1sn4s"]
+
+[sub_resource type="Resource" id="Resource_ndotc"]
+script = ExtResource("2_ndotc")
+LevelName = "FMFJ Level 1"
+ScenePath = "uid://8bwbboypslwa"
+CheckpointCount = 2
+metadata/_custom_type_script = "uid://d04nhf2fwftor"
+
+[sub_resource type="Resource" id="Resource_1sn4s"]
+script = ExtResource("2_ndotc")
+LevelName = "FMFJ Level 2"
+ScenePath = "uid://khstjf3vc6th"
+CheckpointCount = 2
+metadata/_custom_type_script = "uid://d04nhf2fwftor"
+
+[sub_resource type="Resource" id="Resource_lnk0c"]
+script = ExtResource("2_ndotc")
+LevelName = "FMFJ Level 3"
+ScenePath = "uid://fjrjrh72j5h3"
+CheckpointCount = 2
+metadata/_custom_type_script = "uid://d04nhf2fwftor"
+
+[node name="DebugLevelSelect" type="Control" unique_id=356064426 node_paths=PackedStringArray("_levelListContainer", "_checkpointListContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_if4iu")
+_levels = Array[Object]([SubResource("Resource_ndotc"), SubResource("Resource_1sn4s"), SubResource("Resource_lnk0c")])
+_levelListContainer = NodePath("HBoxContainer/ScrollContainer/LevelList")
+_checkpointListContainer = NodePath("HBoxContainer/ScrollContainer2/CheckpointList")
+_buttonPrefab = ExtResource("3_1sn4s")
+
+[node name="MenuColorBackground" type="ColorRect" parent="." unique_id=1206757636]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1591615580]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -84.0
+offset_right = 112.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer" unique_id=1996969948]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelList" type="VBoxContainer" parent="HBoxContainer/ScrollContainer" unique_id=359937283]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer" unique_id=946582030]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckpointList" type="VBoxContainer" parent="HBoxContainer/ScrollContainer2" unique_id=1320599850]
+layout_mode = 2
+size_flags_horizontal = 3

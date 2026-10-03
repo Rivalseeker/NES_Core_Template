@@ -49,7 +49,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wugm8")
+_sceneClearColor = Color(0.3019608, 0.3019608, 0.3019608, 1)
 _mainMenuPath = "uid://cuqxevd2frvsd"
+_debugLevelSelectPath = "uid://de6ljy3ioiwrt"
 
 [node name="GameTitle" parent="." unique_id=1692661727 instance=ExtResource("1_mq46y")]
 layout_mode = 1

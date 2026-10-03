@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://e8qb2xhlj28f" path="res://Scenes/GUI/Labels/nes_label.tscn" id="1_rbka0"]
 
 [node name="PauseScreen" type="ColorRect" unique_id=1917588790]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

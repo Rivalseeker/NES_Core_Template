@@ -12,7 +12,8 @@ public partial class GameContainer : Node
     [Export] private CanvasLayer _debugLayer;
     [Export] private CanvasLayer _crtFilterLayer;
 
-    [Export] private PackedScene _loadingScreenPrefab; 
+    [Export] private PackedScene _loadingScreenPrefab;
+    [Export] private PackedScene _pauseScreenPrefab;
 
     private readonly Vector2I _baseResolution = new Vector2I(384, 216);
 
@@ -23,6 +24,7 @@ public partial class GameContainer : Node
         SceneManager.Instance.GuiContainer = _guiLayer;
         SceneManager.Instance.LoadingScreenLayer = _loadingScreenLayer;
         SceneManager.Instance.LoadingScreenPrefab = _loadingScreenPrefab;
+        SceneManager.Instance.PauseScreenPrefab = _pauseScreenPrefab;
 
         ApplyInitialCRTFilter();
 
