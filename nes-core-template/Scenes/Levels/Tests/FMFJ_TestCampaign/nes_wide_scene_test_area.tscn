@@ -65,13 +65,13 @@ _data = {
 
 [node name="NES_WideSceneTestArea" type="Node2D" unique_id=40459678 node_paths=PackedStringArray("checkpointContainer", "playerSpawner", "goalArea", "goalAnim", "playerSpawnerGroup", "sceneCamera", "sceneCameraBorder", "debugRuler")]
 script = ExtResource("1_f8sp0")
+nextLevelPath = "uid://khstjf3vc6th"
+sceneClearColor = Color(0.38039216, 0.827451, 0.8901961, 1)
+playerScene = ExtResource("2_w7wy2")
 checkpointContainer = NodePath("Entities/Gizmos/Checkpoints")
 playerSpawner = NodePath("Spawners/PlayerSpawnerGroup/PlayerSpawner")
 goalArea = NodePath("Entities/Gizmos/GoalDoor/GoalArea")
 goalAnim = NodePath("Entities/Players/PlayerGoalAnim")
-nextLevelPath = "uid://khstjf3vc6th"
-sceneClearColor = Color(0.38039216, 0.827451, 0.8901961, 1)
-playerScene = ExtResource("2_w7wy2")
 playerSpawnerGroup = NodePath("Spawners/PlayerSpawnerGroup")
 sceneCamera = NodePath("SceneCamera")
 sceneCameraBorder = NodePath("SceneCamera/SceneCameraBorder")
