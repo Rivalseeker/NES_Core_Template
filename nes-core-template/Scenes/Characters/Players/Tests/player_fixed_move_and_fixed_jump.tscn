@@ -206,8 +206,9 @@ _data = {
 &"RESET": SubResource("Animation_5iv8k")
 }
 
-[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "playerGoalAnim", "PlayerDebugScreen", "JumpArc", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
+[node name="Player_FixedMoveAndFixedJump" type="CharacterBody2D" unique_id=508712885 node_paths=PackedStringArray("playerSprite", "playerAnim", "PlayerDebugScreen", "JumpArc", "PlayerStateLabel", "PlayerXVelocityLabel", "PlayerYVelocityLabel", "PlayerCoyoteTimerLabel", "PlayerStateMachine")]
 collision_layer = 2
+slide_on_ceiling = false
 floor_constant_speed = true
 floor_snap_length = 2.0
 script = ExtResource("1_xep66")
@@ -218,7 +219,6 @@ jumpTimeToDescent = 0.31
 coyoteTime = 0.04
 playerSprite = NodePath("NESSprite")
 playerAnim = NodePath("PlayerAnim")
-playerGoalAnim = NodePath("PlayerGoalAnim")
 PlayerDebugScreen = NodePath("PlayerDebug")
 JumpArc = NodePath("JumpArc")
 PlayerStateLabel = NodePath("PlayerDebug/ColorRect/VBoxContainer/PlayerState")

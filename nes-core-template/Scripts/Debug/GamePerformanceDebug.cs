@@ -16,7 +16,7 @@ public partial class GamePerformanceDebug : CanvasLayer
     public override void _Input(InputEvent @event)
     {
         // Toggle the debug overlay on/off using the F3 key
-        if (@event is InputEventKey keyEvent && keyEvent.Keycode == Key.F3 && keyEvent.Pressed && !keyEvent.Echo)
+        if (@event is InputEventKey keyEvent && keyEvent.Keycode == Key.G && keyEvent.Pressed && !keyEvent.Echo)
         {
             _showDebug = !_showDebug;
             Visible = _showDebug;
