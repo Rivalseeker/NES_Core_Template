@@ -25,6 +25,12 @@ ScenePath = "uid://fjrjrh72j5h3"
 CheckpointCount = 2
 metadata/_custom_type_script = "uid://d04nhf2fwftor"
 
+[sub_resource type="Resource" id="Resource_ywph1"]
+script = ExtResource("2_ndotc")
+LevelName = "Debug"
+ScenePath = "uid://br10hj0crsl0e"
+metadata/_custom_type_script = "uid://d04nhf2fwftor"
+
 [node name="DebugLevelSelect" type="Control" unique_id=356064426 node_paths=PackedStringArray("_levelListContainer", "_checkpointListContainer")]
 layout_mode = 3
 anchors_preset = 15
@@ -33,7 +39,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_if4iu")
-_levels = Array[Object]([SubResource("Resource_ndotc"), SubResource("Resource_1sn4s"), SubResource("Resource_lnk0c")])
+_levels = Array[Object]([SubResource("Resource_ndotc"), SubResource("Resource_1sn4s"), SubResource("Resource_lnk0c"), SubResource("Resource_ywph1")])
 _levelListContainer = NodePath("HBoxContainer/ScrollContainer/LevelList")
 _checkpointListContainer = NodePath("HBoxContainer/ScrollContainer2/CheckpointList")
 _buttonPrefab = ExtResource("3_1sn4s")
