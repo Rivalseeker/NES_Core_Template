@@ -22,8 +22,8 @@ _world2D = NodePath("World2D")
 _guiLayer = NodePath("GUI")
 _loadingScreenLayer = NodePath("LoadingScreen")
 _debugLayer = NodePath("GamePerformanceDebug")
-_crtFilterLayer = NodePath("CRT_Layer")
 _loadingScreenPrefab = ExtResource("2_a3xfu")
+_crtFilterLayer = NodePath("CRT_Layer")
 
 [node name="World2D" type="Node2D" parent="." unique_id=1744169343]
 

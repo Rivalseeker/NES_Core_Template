@@ -12,6 +12,7 @@ public partial class GameContainer : Node
     [Export] private CanvasLayer _debugLayer;
 
     [Export] private PackedScene _loadingScreenPrefab; 
+    [Export] private CanvasLayer _crtFilterLayer;
 
     private readonly Vector2I _baseResolution = new Vector2I(384, 216);
 
@@ -22,6 +23,7 @@ public partial class GameContainer : Node
         SceneManager.Instance.GuiContainer = _guiLayer;
         SceneManager.Instance.LoadingScreenLayer = _loadingScreenLayer;
         SceneManager.Instance.LoadingScreenPrefab = _loadingScreenPrefab;
+        SceneManager.Instance.CrtFilterLayer = _crtFilterLayer;
 
         GetTree().Root.SizeChanged += OnWindowSizeChanged;
         

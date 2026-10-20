@@ -15,8 +15,11 @@ public partial class NesWideSceneBase : Node2D
         // Apply the background color immediately when the splash screen loads
         ApplyClearColor(sceneClearColor);
 
-        // Turn on Scene Camera Border
-        sceneCamera.Visible = true;
+        if (sceneCamera != null)
+        {
+            // Turn on Scene Camera Border
+            sceneCamera.Visible = true;
+        }
     }
 
     public override void _PhysicsProcess(double delta)

@@ -13,6 +13,8 @@ public partial class SceneManager : Node
     // The prefab of the loading screen UI
     public PackedScene LoadingScreenPrefab { get; set; }
 
+    public Node CrtFilterLayer { get; set; }
+
     private Node _currentWorldScene;
     private Node _currentGuiScene;
     private Node _activeLoadingScreen;
