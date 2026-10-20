@@ -101,7 +101,6 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.78431374)
 
 [node name="OptionsList" type="VBoxContainer" parent="." unique_id=1053040443]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -188,6 +187,7 @@ flat = true
 alignment = 0
 
 [node name="AudioList" type="VBoxContainer" parent="." unique_id=934568164]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
