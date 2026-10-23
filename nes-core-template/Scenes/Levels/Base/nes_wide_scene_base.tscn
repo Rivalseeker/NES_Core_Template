@@ -40,7 +40,12 @@ position = Vector2(28, 108)
 texture = ExtResource("3_mr4h6")
 
 [node name="SceneCameraBorder" type="Sprite2D" parent="SceneCamera" unique_id=1872168624]
+visible = false
 texture = ExtResource("3_1v4uu")
+
+[node name="SceneCameraPolyBorder" type="Polygon2D" parent="SceneCamera" unique_id=1530383044]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-320, 180, -320, -180, 320, -180, 320, 180, 192, 180, 192, -108, -192, -108, -192, 108, 192, 108, 192, 180)
 
 [node name="SceneDebug" type="CanvasLayer" parent="." unique_id=665305888]
 layer = 10
