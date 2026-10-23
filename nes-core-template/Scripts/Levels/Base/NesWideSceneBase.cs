@@ -8,7 +8,7 @@ public partial class NesWideSceneBase : Node2D
     // References to our nodes
     [ExportCategory("Node References")]
     [Export] private Camera2D sceneCamera;
-    [Export] private Sprite2D sceneCameraBorder;
+    // [Export] private Sprite2D sceneCameraBorder;
 
     public override void _Ready()
     {
@@ -24,21 +24,21 @@ public partial class NesWideSceneBase : Node2D
 
     public override void _PhysicsProcess(double delta)
     {
-        // Ensure both nodes exist to prevent null reference errors
-        if (sceneCamera != null && sceneCameraBorder != null)
-        {
-            Vector2 currentZoom = sceneCamera.Zoom;
+        // // Ensure both nodes exist to prevent null reference errors
+        // if (sceneCamera != null && sceneCameraBorder != null)
+        // {
+        //     Vector2 currentZoom = sceneCamera.Zoom;
 
-            // Prevent division by zero
-            if (currentZoom.X != 0 && currentZoom.Y != 0)
-            {
-                // Inverse relationship: as Zoom decreases, Scale increases (and vice versa)
-                sceneCameraBorder.Scale = new Vector2(
-                    1.0f / currentZoom.X,
-                    1.0f / currentZoom.Y
-                );
-            }
-        }
+        //     // Prevent division by zero
+        //     if (currentZoom.X != 0 && currentZoom.Y != 0)
+        //     {
+        //         // Inverse relationship: as Zoom decreases, Scale increases (and vice versa)
+        //         sceneCameraBorder.Scale = new Vector2(
+        //             1.0f / currentZoom.X,
+        //             1.0f / currentZoom.Y
+        //         );
+        //     }
+        // }
     }
 
     // Function to change the active viewport's clear color
